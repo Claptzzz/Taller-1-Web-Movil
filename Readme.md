@@ -4,5 +4,5 @@
 
 * Danilo Lucero
 * Ramses Quintanilla
-* Jaime
+* Jaime Araya
 * Nicolás Rojas
