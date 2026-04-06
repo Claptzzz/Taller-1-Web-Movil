@@ -7,11 +7,12 @@ const submitModalBtn = document.getElementById('button_enviar');
 
 const profileImg = document.getElementById('perfil');
 
+
 //funcion para abrir el pop de login
 function open_pop(type){
     modal.classList.remove('hidden');
 
-    if(type === 'login'){
+    if(type === 'login' || type === 'profile'){
         modalTitle.textContent = 'Iniciar Sesion';
         submitModalBtn.textContent = 'ENTRAR';
     } else if (type === 'register') {
@@ -34,6 +35,7 @@ function submit_pop() {
 
 loginBtn.addEventListener('click', () => {open_pop('login')});
 registerBtn.addEventListener('click', () => {open_pop('register')});
+profileImg.addEventListener('click', () => {open_pop('profile')});
 closeBtn.addEventListener('click', () => {close_pop()});
 
 submitModalBtn.addEventListener('click', () => {submit_pop()});
