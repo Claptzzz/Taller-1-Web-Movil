@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme {
+    --color-OatmilkFoam: #F8F4EF;
+    --color-DeepSlate: #40434E;
+}

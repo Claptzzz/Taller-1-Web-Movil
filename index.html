@@ -7,11 +7,28 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="assets/css/input.css">
 
+    <!--MOMENTANEO PARA LAS VARIABLES NUEVAS-->
+    <style type="text/tailwindcss">
+        @theme {
+        --color-OatmilkFoam: #F8F4EF;
+        --color-DeepSlate: #40434E;
+        }
+    </style>
+
     <title>Document</title>
 </head>
-<body>
-    <header>
-        
+<body class="flex flex-col min-w-sm max-w-3xl justify-center items-center m-auto bg-OatmilkFoam">
+    <header class="flex flex-row max-sm:w-sm lg:w-3xl sm:w-xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate text-OatmilkFoam">
+        <h1 class="flex font-bold text-xl">NOMBRE</h1>
+        <nav class="flex flex-row gap-1">
+            <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl">HOME</a>
+            <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl">HOW TO USE</a>
+            <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl">ABOUT US</a>
+        </nav>
+        <div class="sesion flex flex-row gap-2">
+            <button type="button" class="border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
+            <button type="button" class="bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+        </div>
     </header>
 
     <script src="assets/js/app.js"></script>
