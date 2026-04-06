@@ -18,16 +18,21 @@
     <title>Document</title>
 </head>
 <body class="flex flex-col min-w-sm max-w-3xl justify-center items-center m-auto bg-OatmilkFoam">
-    <header class="flex flex-row max-sm:w-sm lg:w-3xl sm:w-xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate text-OatmilkFoam">
-        <h1 class="flex font-bold text-xl">NOMBRE</h1>
-        <nav class="flex flex-row gap-1">
-            <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl">HOME</a>
-            <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl">HOW TO USE</a>
-            <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl">ABOUT US</a>
-        </nav>
-        <div class="sesion flex flex-row gap-2">
-            <button type="button" class="border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
-            <button type="button" class="bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+    <header class="flex flex-row max-sm:w-sm lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate text-OatmilkFoam max-sm:flex-col">
+        <h1 class="flex font-bold text-xl max-lg:text-lg">NOMBRE</h1>
+        <div class="flex flex-row justify-center align-middle items-center">
+            <nav class="flex flex-row gap-1 max-lg:text-sm max-lg:mr-5 max-lg:ml-5">
+                <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">HOME</a>
+                <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">HOW TO USE</a>
+                <a href="" class="hover:bg-gray-500/40 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">ABOUT US</a>
+            </nav>
+            <div id="logins" class="flex flex-row gap-2 max-lg:text-sm max-sm:hidden">
+                <button type="button" class="button_log border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
+                <button type="button" class="button_log bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+            </div>
+            <div id="perfil" class="hidden ml-2 max-sm:flex">
+                <svg class="fill-OatmilkFoam mr-1" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="28"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
+            </div>
         </div>
     </header>
 
