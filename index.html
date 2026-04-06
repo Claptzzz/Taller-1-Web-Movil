@@ -30,8 +30,8 @@
                 <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">ABOUT US</a>
             </nav>
             <div id="logins" class="flex flex-row gap-2 max-lg:text-sm max-sm:hidden">
-                <button type="button" class="button_log hover:text-sky-200 hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
-                <button type="button" class="button_log hover:bg-sky-200 bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+                <button type="button" id="button_log" class="hover:text-sky-200 hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
+                <button type="button" id="button_reg" class="hover:bg-sky-200 bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
             </div>
             <div id="perfil" class="hidden ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-10">
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1">
@@ -68,6 +68,29 @@
             </div>
         </div>
     </article>
+    
+    <div id="auth_modal" class="fixed hidden inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-center items-center transition-opacity">
+        <div class="bg-OatmilkFoam text-DeepSlate p-8 md:p-10 rounded-4xl w-4xl max-w-md relative shadow-2xl">
+            <button id="cerrar_pop" class="absolute top-5 right-6 text-3xl font-bold hover:text-DeepSlateLight transition-colors">&times;</button>
+            <h2 id="titulo_pop" class="text-3xl font-bold mb-6 text-center">Iniciar Sesión</h2>
+            
+            <form class="flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label for="email" class="font-bold text-sm ml-1">Correo Electrónico</label>
+                    <input type="email" id="email" placeholder="tu@email.com" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate transition-colors">
+                </div>
+                
+                <div class="flex flex-col gap-1">
+                    <label for="password" class="font-bold text-sm ml-1">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate transition-colors">
+                </div>
+                
+                <button type="button" id="button_enviar" class="mt-4 bg-DeepSlate text-OatmilkFoam font-bold text-lg py-3 rounded-2xl hover:bg-DeepSlateDark active:scale-95 transition-all">
+                    ENTRAR
+                </button>
+            </form>
+        </div>
+    </div>
 
     <script src="assets/js/app.js"></script>
 </body>
