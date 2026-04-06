@@ -2,5 +2,8 @@
 
 @theme {
     --color-OatmilkFoam: #F8F4EF;
+
     --color-DeepSlate: #40434E;
+    --color-DeepSlateDark: #353741;
+    --color-DeepSlateLight: #5E6373;
 }
