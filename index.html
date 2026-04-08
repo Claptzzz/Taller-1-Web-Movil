@@ -21,6 +21,7 @@
     <title>Document</title>
 </head>
 <body class="flex flex-col min-w-sm max-w-5xl justify-center items-center m-auto bg-OatmilkFoam">
+    <!--HEADER GLOSSY-->
     <header class="flex sticky top-5 z-50 max-sm:w-sm lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
         <h1 class="flex font-bold text-xl max-lg:text-lg">NOMBRE</h1>
         <div class="flex flex-row justify-between items-center max-sm:relative">
@@ -45,7 +46,7 @@
         <h1 class="text-4xl md:text-4xl lg:text-5xl font-bold mb-8 max-w-2xl">TUS HORAS DE SUEÑO NOS IMPORTAN!</h1>
         <p class="text-lg md:text-2xl mb-6">Nos encargamos de mejorar tus horas de sueño.</p>
         <p class="text-lg md:text-2xl mb-12 max-w-3xl">Registrate para tener un analisis completo de tus actividades diarias y enterarte como mejorar tus ciclos de sueño!</p>
-        <button type="button" class="bg-DeepSlate font-bold text-lg md:text-xl py-5 px-12 rounded-4xl hover:bg-DeepSlateDark active:scale-95 transition-all">HAZ TU ANALISIS</button>
+        <button type="button" class="bg-DeepSlate/80 backdrop-blur-md border border-white/10 shadow-lg font-bold text-lg md:text-xl py-5 px-12 rounded-4xl hover:bg-DeepSlateDark/90 active:scale-95 transition-all">HAZ TU ANALISIS</button>
     </article>
 
     <article class="how_to_use relative z-10 text-DeepSlate flex flex-col lg:items-center w-full max-sm:w-full lg:w-5xl px-8 md:px-24 pt-40 pb-24 -mt-25">
@@ -68,7 +69,22 @@
             </div>
         </div>
     </article>
+
+    <section class="about_us bg-DeepSlate text-OatmilkFoam flex flex-col gap-10 justify-center items-center w-full max-sm:w-full lg:w-5xl rounded-t-4xl px-8 md:px-24 pt-15 pb-15 ">
+        <h1 class="text-4xl md:text-4xl lg:text-5xl font-bold mb-5 max-w-2xl text-center">CONOCE SOBRE NOSOTROS</h1>
+        <article class="card1 flex flex-row bg-OatmilkFoam rounded-4xl w-full justify-center">
+                <svg class=" fill-DeepSlate p-10 w-50 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100"><g id="_01_align_center" data-name="01 align center"><polygon points="24 1.414 22.586 0 12 10.586 1.414 0 0 1.414 10.586 12 0 22.586 1.414 24 12 13.414 22.586 24 24 22.586 13.414 12 24 1.414"/></g></svg>
+        </article>
+        <article class="card2 flex flex-row bg-OatmilkFoam rounded-4xl w-full justify-center">
+                <svg class=" fill-DeepSlate p-10 w-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100"><g id="_01_align_center" data-name="01 align center"><polygon points="24 1.414 22.586 0 12 10.586 1.414 0 0 1.414 10.586 12 0 22.586 1.414 24 12 13.414 22.586 24 24 22.586 13.414 12 24 1.414"/></g></svg>
+        </article>
+    </section>
     
+    <footer class="bg-OatmilkFoam p-4">
+        <p>&copyCopyright 2026</p>
+    </footer>
+
+    <!--FORMULARIO PARA EL INICIO DE SESION-->
     <div id="auth_modal" class="fixed hidden inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-center items-center transition-opacity">
         <div class="bg-OatmilkFoam text-DeepSlate p-8 md:p-10 rounded-4xl w-4xl max-w-md relative shadow-2xl">
             <button id="cerrar_pop" class="absolute top-5 right-6 text-3xl font-bold hover:text-DeepSlateLight transition-colors">&times;</button>
