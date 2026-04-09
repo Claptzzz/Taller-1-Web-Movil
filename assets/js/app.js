@@ -6,6 +6,7 @@ const modalTitle = document.getElementById('titulo_pop');
 const submitModalBtn = document.getElementById('button_enviar');
 
 const profileImg = document.getElementById('perfil');
+const rep_pass = document.getElementById('rep_pass');
 
 
 //funcion para abrir el pop de login
@@ -15,9 +16,11 @@ function open_pop(type){
     if(type === 'login' || type === 'profile'){
         modalTitle.textContent = 'Iniciar Sesion';
         submitModalBtn.textContent = 'ENTRAR';
+        rep_pass.classList.add('hidden');
     } else if (type === 'register') {
         modalTitle.textContent = 'Crear Cuenta';
         submitModalBtn.textContent = 'REGISTRARSE';
+        rep_pass.classList.remove('hidden');
     }
 } 
 

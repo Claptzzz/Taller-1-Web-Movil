@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/formInput.css">
+
+    <!--MOMENTANEO PARA LAS VARIABLES NUEVAS-->
+    <style type="text/tailwindcss">
+        @theme {
+        --color-OatmilkFoam: #F8F4EF;
+
+        --color-DeepSlate: #40434E;
+        --color-DeepSlateDark: #353741;
+        --color-DeepSlateLight: #5E6373;
+        }
+    </style>
+
+    <title>Mi Perfil</title>
+</head>
+<body class="flex flex-col min-w-sm max-w-5xl justify-center items-center m-auto bg-OatmilkFoam">
+    
+    <!--HEADER GLOSSY--> <!--[30rem] originalmente era sm-->
+    <header class="flex sticky top-5 z-50 max-sm:w-[30rem] lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
+        <h1 class="flex font-bold text-xl max-lg:text-lg">NOMBRE</h1>
+        <div class="flex flex-row justify-between items-center max-sm:relative">
+            <nav class="flex flex-row gap-1 max-lg:text-sm max-lg:mr-5 max-lg:ml-5 lg:ml-5 lg:mr-5">
+                <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">HOME</a>
+                <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">HOW TO USE</a>
+                <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2">ABOUT US</a>
+            </nav>
+            <div id="logins" class="flex flex-row gap-2 max-lg:text-sm max-sm:hidden">
+                <button type="button" id="button_log" class="hover:text-sky-200 hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
+                <button type="button" id="button_reg" class="hover:bg-sky-200 bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+            </div>
+            <div id="perfil" class="hidden ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-10">
+                <button id="button_perfil" type="button" class="align-middle">
+                    <svg class="fill-OatmilkFoam mr-1 max-sm:w-10" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="28"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="user_view">
+        <!--EN ESTA SECCION SE VERIFICARA SI EL USUARIO ESTA INICIADO SESION O NO-->
+        <section id="auth_login" class="flex z-20 max-sm:w-[30rem] lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-3xl bg-DeepSlate text-OatmilkFoam hidden">
+            <h1>INICIA SESION PARA HACER UN SEGUIMIENTO DE TUS DATOS</h1>
+            <div id="logins" class="flex flex-row gap-2 max-lg:text-sm">
+                <button type="button" id="button_log" class="hover:text-sky-200 hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
+                <button type="button" id="button_reg" class="hover:bg-sky-200 bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+            </div>
+        </section>
+
+        <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
+        <section id="tabs_perfil" class="flex flex-col">
+            <header class="flex z-20 w-full max-sm:w-[30rem] lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-3xl bg-DeepSlate text-OatmilkFoam">
+                <nav class="flex flex-row gap-1 max-lg:text-sm justify-center text-center">
+                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">MI DIA</button>
+                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">METAS Y ANALITICAS</button>
+                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">PLANIFICACION</button>
+                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">MODIFICAR PERFIL</button>
+                </nav>
+            </header>
+        </section>
+
+    </section>
+
+</body>
+</html>
