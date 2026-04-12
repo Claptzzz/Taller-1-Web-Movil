@@ -5,15 +5,16 @@ const closeBtn = document.getElementById('cerrar_pop');
 const modalTitle = document.getElementById('titulo_pop');
 const submitModalBtn = document.getElementById('button_enviar');
 
-const profileImg = document.getElementById('perfil');
 const rep_pass = document.getElementById('rep_pass');
+const auth_login = document.getElementById('auth_login');
+const tabs_perfil = document.getElementById('tabs_perfil');
 
 
 //funcion para abrir el pop de login
 function open_pop(type){
     modal.classList.remove('hidden');
 
-    if(type === 'login' || type === 'profile'){
+    if(type === 'login'){
         modalTitle.textContent = 'Iniciar Sesion';
         submitModalBtn.textContent = 'ENTRAR';
         rep_pass.classList.add('hidden');
@@ -30,15 +31,13 @@ function close_pop() {
 }
 
 function submit_pop() {
-    loginBtn.classList.add('hidden');
-    registerBtn.classList.add('hidden');
-    profileImg.classList.remove('hidden');
+    auth_login.classList.add('hidden')
+    tabs_perfil.classList.remove('hidden')
     close_pop();
 }
 
 loginBtn.addEventListener('click', () => {open_pop('login')});
 registerBtn.addEventListener('click', () => {open_pop('register')});
-profileImg.addEventListener('click', () => {open_pop('profile')});
 closeBtn.addEventListener('click', () => {close_pop()});
 
 submitModalBtn.addEventListener('click', () => {submit_pop()});
