@@ -27,9 +27,9 @@
         <h1 class="flex font-bold text-xl max-lg:text-lg">NOMBRE</h1>
         <div class="flex flex-row justify-between items-center max-sm:relative">
             <nav class="flex flex-row gap-1 max-lg:text-sm max-lg:mr-5 max-lg:ml-5 lg:ml-5 lg:mr-5">
-                <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">HOME</a>
-                <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">HOW TO USE</a>
-                <a href="" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">ABOUT US</a>
+                <a href="../index.html#home" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">HOME</a>
+                <a href="../index.html#how_to_use" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">HOW TO USE</a>
+                <a href="../index.html#about" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">ABOUT US</a>
             </nav>
             <div id="perfil" class="ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-15">
                 <a href="perfil.html">
@@ -41,25 +41,49 @@
 
     <section class="user_view">
         <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
-        <section id="tabs_perfil" class=" hidden flex flex-col text-nowrap">
-            <header class="flex z-20 w-full max-sm:w-[29rem] lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-3xl bg-DeepSlate text-OatmilkFoam">
-                <nav class="flex flex-row gap-1 max-lg:text-sm justify-center text-center">
-                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">MI DIA</button>
-                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">ANALITICAS</button>
-                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">PLANIFICACION</button>
-                    <button class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">MODIFICAR PERFIL</button>
+        <section id="tabs_perfil" class="flex flex-col text-nowrap max-sm:w-[29rem] sm:w-lg lg:w-3xl m-auto">
+            <header class="flex z-20 mt-5 p-3 px-4 justify-center rounded-2xl bg-DeepSlate text-OatmilkFoam">
+                <nav class="flex flex-row sm:gap-2 max-lg:text-sm">
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">MI DIA</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">ANALITICAS</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">PLANIFICACION</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">PERFIL</button>
                 </nav>
             </header>
         </section>
         
-        <!--EN ESTA SECCION SE VERIFICARA SI EL USUARIO ESTA INICIADO SESION O NO-->
-        <section id="auth_login" class="flex z-20 max-sm:w-[29rem] sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-3xl bg-DeepSlate text-OatmilkFoam max-sm:flex-col max-sm:py-5">
+        <!--EN ESTA SECCION SE VERIFICARA SI EL USUARIO ESTA INICIADO SESION O NO // NO DEBE TENER EL HIDDEN PUESTO-->
+        <section id="auth_login" class="hidden flex z-20 max-sm:w-[29rem] sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-2xl bg-DeepSlate text-OatmilkFoam max-sm:flex-col max-sm:py-5">
             <h1 class="max-sm:pb-4 max-sm:text-center">INICIA SESION PARA HACER UN SEGUIMIENTO DE TUS DATOS Y RECOMENDACIONES</h1>
             <div id="logins" class="flex flex-row gap-2 max-lg:text-sm ml-5 max-sm:ml-0">
                 <button type="button" id="button_log" class="hover:text-sky-200 text-xl hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
                 <button type="button" id="button_reg" class="hover:bg-sky-200 text-xl bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
             </div>
         </section>
+
+    </section>
+
+    <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
+    <section id="content_tabs" class="bg-DeepSlate max-sm:w-[29rem] lg:w-3xl sm:w-lg lg:w-3xl mt-5 py-10 px-10 rounded-xl text-OatmilkFoam">
+        <article id="tab_day" class="tab_content">
+            <h1 class="mb-5 text-3xl font-medium">MI DIA</h1>
+            <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, corporis ipsam assumenda reprehenderit itaque maiores ut iste, suscipit totam ab aliquam cumque accusantium, laboriosam magni impedit eum esse? Eum, aliquam.</p>
+        </article>
+
+        <article id="tab_analitics" class="tab_content hidden">
+            <h1 class="mb-5 text-3xl font-medium">ANALITICAS</h1>
+            <p class="text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam accusamus, dolorem quos necessitatibus non quibusdam earum excepturi quo? Nisi sit sed animi fugiat sunt reprehenderit debitis harum ipsa quibusdam reiciendis?</p>
+        </article>
+
+        <article id="tab_planification" class="tab_content hidden">
+            <h1 class="mb-5 text-3xl font-medium">PLANIFICACION</h1>
+            <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel cum aperiam animi doloremque quidem fugiat est repudiandae aliquid distinctio debitis maiores quam pariatur, accusantium quaerat, excepturi, temporibus velit. Dignissimos, pariatur!</p>
+        </article>
+
+        <article id="tab_perfil" class="tab_content hidden">
+            <h1 class="mb-5 text-3xl font-medium">PERFIL</h1>
+            <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel cum aperiam animi doloremque quidem fugiat est repudiandae aliquid distinctio debitis maiores quam pariatur, accusantium quaerat, excepturi, temporibus velit. Dignissimos, pariatur!</p>
+        </article>
     </section>
 
 

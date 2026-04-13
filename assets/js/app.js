@@ -8,6 +8,7 @@ const submitModalBtn = document.getElementById('button_enviar');
 const rep_pass = document.getElementById('rep_pass');
 const auth_login = document.getElementById('auth_login');
 const tabs_perfil = document.getElementById('tabs_perfil');
+const tabs_content = document.getElementById('content_tabs');
 
 
 //funcion para abrir el pop de login
@@ -33,6 +34,7 @@ function close_pop() {
 function submit_pop() {
     auth_login.classList.add('hidden')
     tabs_perfil.classList.remove('hidden')
+    tabs_content.classList.remove('hidden')
     close_pop();
 }
 
@@ -41,3 +43,15 @@ registerBtn.addEventListener('click', () => {open_pop('register')});
 closeBtn.addEventListener('click', () => {close_pop()});
 
 submitModalBtn.addEventListener('click', () => {submit_pop()});
+
+
+//funcion para activar los tabs
+const btn_tabs = document.querySelectorAll('.btn_tabs');
+const contents = document.querySelectorAll('.tab_content');
+
+btn_tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+        contents.forEach(content => content.classList.add('hidden'));
+        contents[index].classList.remove('hidden');
+    })
+})
