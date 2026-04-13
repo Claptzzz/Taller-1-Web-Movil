@@ -23,15 +23,15 @@
 <body class="flex flex-col min-w-sm max-w-5xl justify-center items-center m-auto bg-OatmilkFoam">
     
     <!--HEADER GLOSSY--> <!--[30rem] originalmente era sm-->
-    <header class="flex sticky top-5 z-50 max-sm:w-[29rem] lg:w-3xl sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
+    <header class="flex sticky top-5 z-50 max-sm:w-sm lg:w-3xl sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
         <h1 class="flex font-bold text-xl max-lg:text-lg">NOMBRE</h1>
         <div class="flex flex-row justify-between items-center max-sm:relative">
             <nav class="flex flex-row gap-1 max-lg:text-sm max-lg:mr-5 max-lg:ml-5 lg:ml-5 lg:mr-5">
-                <a href="../index.html#home" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">HOME</a>
-                <a href="../index.html#how_to_use" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">HOW TO USE</a>
-                <a href="../index.html#about" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:px-4">ABOUT US</a>
+                <a href="../index.html#home" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg max-lg:px-4">HOME</a>
+                <a href="../index.html#how_to_use" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg max-lg:px-4">HOW TO USE</a>
+                <a href="../index.html#about" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg max-lg:px-4">ABOUT US</a>
             </nav>
-            <div id="perfil" class="ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-15">
+            <div id="perfil" class="ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-5">
                 <a href="perfil.html">
                     <svg class="fill-OatmilkFoam mr-1 max-sm:w-10" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="28"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
                 </a>
@@ -41,19 +41,19 @@
 
     <section class="user_view">
         <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
-        <section id="tabs_perfil" class="hidden flex flex-col text-nowrap max-sm:w-[29rem] sm:w-lg lg:w-3xl m-auto">
+        <section id="tabs_perfil" class="hidden flex flex-col text-nowrap max-sm:w-sm sm:w-lg lg:w-3xl m-auto">
             <header class="flex z-20 mt-5 p-3 px-4 justify-center rounded-2xl bg-DeepSlate text-OatmilkFoam">
                 <nav class="flex flex-row sm:gap-2 max-lg:text-sm">
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">MI DIA</button>
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">ANALITICAS</button>
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">PLANIFICACION</button>
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-2xl max-lg:pl-2 max-lg:pr-2" type="button">PERFIL</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">MI DIA</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">ANALITICAS</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">PLANIFICACION</button>
+                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">PERFIL</button>
                 </nav>
             </header>
         </section>
         
         <!--EN ESTA SECCION SE VERIFICARA SI EL USUARIO ESTA INICIADO SESION O NO // NO DEBE TENER EL HIDDEN PUESTO-->
-        <section id="auth_login" class="flex z-20 max-sm:w-[29rem] sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-2xl bg-DeepSlate text-OatmilkFoam max-sm:flex-col max-sm:py-5">
+        <section id="auth_login" class="flex z-20 max-sm:w-sm sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-2xl bg-DeepSlate text-OatmilkFoam max-sm:flex-col max-sm:py-5">
             <h1 class="max-sm:pb-4 max-sm:text-center">INICIA SESION PARA HACER UN SEGUIMIENTO DE TUS DATOS Y RECOMENDACIONES</h1>
             <div id="logins" class="flex flex-row gap-2 max-lg:text-sm ml-5 max-sm:ml-0">
                 <button type="button" id="button_log" class="hover:text-sky-200 text-xl hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
@@ -64,7 +64,7 @@
     </section>
 
     <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
-    <section id="content_tabs" class="hidden bg-DeepSlate max-sm:w-[29rem] lg:w-3xl sm:w-lg lg:w-3xl mt-5 py-10 px-10 rounded-xl text-OatmilkFoam">
+    <section id="content_tabs" class="hidden bg-DeepSlate max-sm:w-sm lg:w-3xl sm:w-lg lg:w-3xl mt-5 py-10 px-10 rounded-xl text-OatmilkFoam">
         <article id="tab_day" class="tab_content">
             <h1 class="mb-5 text-3xl font-medium">MI DIA</h1>
             <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, corporis ipsam assumenda reprehenderit itaque maiores ut iste, suscipit totam ab aliquam cumque accusantium, laboriosam magni impedit eum esse? Eum, aliquam.</p>
