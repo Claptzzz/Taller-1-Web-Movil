@@ -11,7 +11,6 @@
     <style type="text/tailwindcss">
         @theme {
         --color-OatmilkFoam: #F8F4EF;
-
         --color-DeepSlate: #40434E;
         --color-DeepSlateDark: #353741;
         --color-DeepSlateLight: #5E6373;
@@ -20,102 +19,140 @@
 
     <title>Mi Perfil</title>
 </head>
-<body class="flex flex-col min-w-sm max-w-5xl justify-center items-center m-auto bg-OatmilkFoam">
+<body class="flex flex-col min-w-sm max-w-5xl justify-center items-center m-auto bg-OatmilkFoam px-4">
     
-    <!--HEADER GLOSSY--> <!--[30rem] originalmente era sm-->
-    <header class="flex sticky top-5 z-50 max-sm:w-sm lg:w-3xl sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
-        <h1 class="flex font-bold text-xl max-lg:text-lg">NOMBRE</h1>
+    <!-- HEADER-->
+    <header class="flex sticky top-5 z-50 max-sm:w-full lg:w-3xl sm:w-lg m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
+        <h1 class="flex font-bold text-xl max-lg:text-lg tracking-tighter">NOMBRE</h1>
         <div class="flex flex-row justify-between items-center max-sm:relative">
             <nav class="flex flex-row gap-1 max-lg:text-sm max-lg:mr-5 max-lg:ml-5 lg:ml-5 lg:mr-5">
-                <a href="../index.html#home" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg max-lg:px-4">HOME</a>
-                <a href="../index.html#how_to_use" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg max-lg:px-4">HOW TO USE</a>
-                <a href="../index.html#about" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg max-lg:px-4">ABOUT US</a>
+                <a href="../index.html#home" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg">HOME</a>
+                <a href="../index.html#how_to_use" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg">HOW TO USE</a>
+                <a href="../index.html#about" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg">ABOUT US</a>
             </nav>
             <div id="perfil" class="ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-5">
                 <a href="perfil.html">
-                    <svg class="fill-OatmilkFoam mr-1 max-sm:w-10" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="28"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
+                    <svg class="fill-OatmilkFoam mr-1 max-sm:w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="user_view">
-        <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
-        <section id="tabs_perfil" class="hidden flex flex-col text-nowrap max-sm:w-sm sm:w-lg lg:w-3xl m-auto">
-            <header class="flex z-20 mt-5 p-3 px-4 justify-center rounded-2xl bg-DeepSlate text-OatmilkFoam">
-                <nav class="flex flex-row sm:gap-2 max-lg:text-sm">
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">MI DIA</button>
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">ANALITICAS</button>
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">PLANIFICACION</button>
-                    <button class="btn_tabs hover:bg-gray-500/40 hover:text-sky-200 transition-all px-4 rounded-lg max-lg:px-3" type="button">PERFIL</button>
-                </nav>
-            </header>
-        </section>
-        
-        <!--EN ESTA SECCION SE VERIFICARA SI EL USUARIO ESTA INICIADO SESION O NO // NO DEBE TENER EL HIDDEN PUESTO-->
-        <section id="auth_login" class="flex z-20 max-sm:w-sm sm:w-lg lg:w-3xl m-auto mt-5 p-3 pl-4 pr-4 justify-center align-middle items-center rounded-2xl bg-DeepSlate text-OatmilkFoam max-sm:flex-col max-sm:py-5">
-            <h1 class="max-sm:pb-4 max-sm:text-center">INICIA SESION PARA HACER UN SEGUIMIENTO DE TUS DATOS Y RECOMENDACIONES</h1>
-            <div id="logins" class="flex flex-row gap-2 max-lg:text-sm ml-5 max-sm:ml-0">
-                <button type="button" id="button_log" class="hover:text-sky-200 text-xl hover:border-sky-200 border-OatmilkFoam border-1 rounded-2xl pl-4 pr-4 active:bg-OatmilkFoam active:text-DeepSlate transition-all">LOGIN</button>
-                <button type="button" id="button_reg" class="hover:bg-sky-200 text-xl bg-OatmilkFoam text-DeepSlate border-1 rounded-2xl pl-4 pr-4 active:bg-DeepSlate active:text-OatmilkFoam active:border-OatmilkFoam transition-all">REGISTER</button>
+    <section class="user_view w-full">
+        <!-- BARRA DE LOGIN-->
+        <section id="auth_login" class="flex z-20 max-sm:w-full sm:w-lg lg:w-3xl m-auto mt-10 p-6 justify-center items-center rounded-3xl bg-DeepSlate text-OatmilkFoam shadow-xl">
+            <h1 class="font-medium text-center">INICIA SESION PARA HACER UN SEGUIMIENTO DE TUS DATOS Y RECOMENDACIONES</h1>
+            <div id="logins" class="flex flex-row gap-3 ml-5">
+                <button type="button" id="button_log" class="hover:text-sky-200 border-OatmilkFoam border-2 rounded-2xl px-6 py-1 transition-all font-bold">LOGIN</button>
+                <button type="button" id="button_reg" class="bg-OatmilkFoam text-DeepSlate border-2 border-OatmilkFoam rounded-2xl px-6 py-1 hover:bg-sky-200 transition-all font-bold">REGISTER</button>
             </div>
         </section>
 
+        <!--NAVEGACION DE PESTAÑAS (los botones de abajo)-->
+        <section id="tabs_perfil" class="hidden">
+            <!-- 
+            <header class="flex z-20 mt-5 p-3 px-4 justify-center rounded-2xl bg-DeepSlate text-OatmilkFoam">
+                <nav class="flex flex-row sm:gap-2 max-lg:text-sm">
+                    <button class="btn_tabs" type="button">MI DIA</button>
+                    <button class="btn_tabs" type="button">ANALITICAS</button>
+                </nav>
+            </header>
+            -->
+        </section>
     </section>
 
-    <!--POR DEFECTO ESTA SECCION IRIA HIDDEN PARA QUE NO SE VIERA SI NO ESTA LOGEADO-->
-    <section id="content_tabs" class="hidden bg-DeepSlate max-sm:w-sm lg:w-3xl sm:w-lg lg:w-3xl mt-5 py-10 px-10 rounded-xl text-OatmilkFoam">
-        <article id="tab_day" class="tab_content">
-            <h1 class="mb-5 text-3xl font-medium">MI DIA</h1>
-            <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, corporis ipsam assumenda reprehenderit itaque maiores ut iste, suscipit totam ab aliquam cumque accusantium, laboriosam magni impedit eum esse? Eum, aliquam.</p>
-        </article>
+    <!--PERFIL DESARROLLADO-->
+    <main id="content_tabs" class="hidden w-full max-w-5xl mt-12 pb-20">
+        
+        <header class="text-center mb-10">
+            <h2 class="text-2xl font-bold uppercase tracking-widest text-DeepSlate">Bienvenido, *nombre de usuario*</h2>
+        </header>
 
-        <article id="tab_analitics" class="tab_content hidden">
-            <h1 class="mb-5 text-3xl font-medium">ANALITICAS</h1>
-            <p class="text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam accusamus, dolorem quos necessitatibus non quibusdam earum excepturi quo? Nisi sit sed animi fugiat sunt reprehenderit debitis harum ipsa quibusdam reiciendis?</p>
-        </article>
+        <!--FORMULARIO DE DATOS-->
+        <section class="flex flex-col md:flex-row justify-center gap-8 mb-16 px-4">
+            <article class="bg-DeepSlate p-8 rounded-[2.5rem] text-OatmilkFoam w-full md:max-w-xs shadow-2xl">
+                <h3 class="text-xl font-bold mb-8 text-center uppercase border-b border-white/10 pb-4">TUS DATOS</h3>
+                <form class="flex flex-col gap-5">
+                    <label class="flex justify-between items-center italic text-sm">Peso <input type="number" id="in-peso" placeholder="kg" class="w-20 bg-OatmilkFoam text-DeepSlate rounded-lg px-2 py-1 outline-none font-bold"></label>
+                    <label class="flex justify-between items-center italic text-sm">Altura <input type="number" id="in-altura" placeholder="cm" class="w-20 bg-OatmilkFoam text-DeepSlate rounded-lg px-2 py-1 outline-none font-bold"></label>
+                    <label class="flex justify-between items-center italic text-sm">% Grasa <input type="number" id="in-grasa" placeholder="%" class="w-20 bg-OatmilkFoam text-DeepSlate rounded-lg px-2 py-1 outline-none font-bold"></label>
+                    <label class="flex justify-between items-center italic text-sm">Cintura <input type="number" id="in-cintura" placeholder="cm" class="w-20 bg-OatmilkFoam text-DeepSlate rounded-lg px-2 py-1 outline-none font-bold"></label>
+                </form>
+            </article>
 
-        <article id="tab_planification" class="tab_content hidden">
-            <h1 class="mb-5 text-3xl font-medium">PLANIFICACION</h1>
-            <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel cum aperiam animi doloremque quidem fugiat est repudiandae aliquid distinctio debitis maiores quam pariatur, accusantium quaerat, excepturi, temporibus velit. Dignissimos, pariatur!</p>
-        </article>
+            <article class="bg-DeepSlateLight p-8 rounded-[2.5rem] text-OatmilkFoam w-full md:max-w-xs shadow-2xl">
+                <h3 class="text-xl font-bold mb-8 text-center uppercase border-b border-white/10 pb-4">DATOS IDEALES</h3>
+                <div class="flex flex-col gap-6 pt-2 text-sm italic">
+                    <p class="flex justify-between border-b border-white/5 pb-2">Peso Ideal <span id="res-peso" class="font-bold">-- kg</span></p>
+                    <p class="flex justify-between border-b border-white/5 pb-2">% Grasa <span id="res-grasa" class="font-bold">15%</span></p>
+                    <p class="flex justify-between border-b border-white/5 pb-2">Cm Cintura <span id="res-cintura" class="font-bold">-- cm</span></p>
+                </div>
+            </article>
+        </section>
 
-        <article id="tab_perfil" class="tab_content hidden">
-            <h1 class="mb-5 text-3xl font-medium">PERFIL</h1>
-            <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel cum aperiam animi doloremque quidem fugiat est repudiandae aliquid distinctio debitis maiores quam pariatur, accusantium quaerat, excepturi, temporibus velit. Dignissimos, pariatur!</p>
-        </article>
-    </section>
+        <!-- BOTONES DE CATEGORIAS -->
+        <nav class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 text-OatmilkFoam">
+            <a href="#" class="group flex flex-col rounded-[2.5rem] overflow-hidden shadow-xl transition-all hover:-translate-y-2">
+                <header class="bg-DeepSlateDark p-5 text-center group-hover:bg-black transition-colors"><h4 class="font-bold uppercase tracking-widest text-sm">ACTIVIDADES</h4></header>
+                <section class="bg-DeepSlate/80 backdrop-blur-md p-8 text-center text-OatmilkFoam/70 text-sm italic flex-grow">Resumen de tus entrenamientos y gasto calórico diario.</section>
+            </a>
+            <a href="#" class="group flex flex-col rounded-[2.5rem] overflow-hidden shadow-xl transition-all hover:-translate-y-2">
+                <header class="bg-DeepSlateDark p-5 text-center group-hover:bg-black transition-colors"><h4 class="font-bold uppercase tracking-widest text-sm">ALIMENTACION</h4></header>
+                <section class="bg-DeepSlate/80 backdrop-blur-md p-8 text-center text-OatmilkFoam/70 text-sm italic flex-grow">Control de ingesta de alimentos y plan nutricional.</section>
+            </a>
+            <a href="#" class="group flex flex-col rounded-[2.5rem] overflow-hidden shadow-xl transition-all hover:-translate-y-2">
+                <header class="bg-DeepSlateDark p-5 text-center group-hover:bg-black transition-colors"><h4 class="font-bold uppercase tracking-widest text-sm">CICLOS DE SUEÑO</h4></header>
+                <section class="bg-DeepSlate/80 backdrop-blur-md p-8 text-center text-OatmilkFoam/70 text-sm italic flex-grow">Análisis de la calidad del descanso y optimización de sueño.</section>
+            </a>
+        </nav>
+        
+        <!-- COSAS QUE NO BORRE POR SI LAS MOSCAS -->
+        <!-- 
+        <article id="tab_day" class="tab_content"><h1>MI DIA</h1><p>...</p></article>
+        -->
+    </main>
 
-
-    <!--FORMULARIO PARA EL INICIO DE SESION-->
-    <div id="auth_modal" class="fixed hidden inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-center items-center transition-opacity">
+    <!-- POP-UP DE INICIO DE SESION -->
+    <div id="auth_modal" class="fixed hidden inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-center items-center">
         <div class="bg-OatmilkFoam text-DeepSlate p-8 md:p-10 rounded-4xl w-4xl max-w-md relative shadow-2xl">
             <button id="cerrar_pop" class="absolute top-5 right-6 text-3xl font-bold hover:text-DeepSlateLight transition-colors">&times;</button>
-            <h2 id="titulo_pop" class="text-3xl font-bold mb-6 text-center">Iniciar Sesión</h2>
-            
+            <h2 id="titulo_pop" class="text-3xl font-bold mb-6 text-center">Iniciar Sesion</h2>
             <form class="flex flex-col gap-4">
                 <div class="flex flex-col gap-1">
                     <label for="email" class="font-bold text-sm ml-1">Correo Electrónico</label>
-                    <input type="email" id="email" placeholder="tu@email.com" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate transition-colors">
+                    <input type="email" id="email" placeholder="tu@email.com" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate">
                 </div>
-                
                 <div class="flex flex-col gap-1">
                     <label for="password" class="font-bold text-sm ml-1">Contraseña</label>
-                    <input type="password" id="password" placeholder="••••••••" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate transition-colors">
+                    <input type="password" id="password" placeholder="••••••••" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate">
                 </div>
-
                 <div id="rep_pass" class="flex flex-col gap-1 hidden">
-                    <label for="password" class="font-bold text-sm ml-1">Repetir Contraseña</label>
-                    <input type="password" id="password" placeholder="••••••••" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate transition-colors">
+                    <label for="password_rep" class="font-bold text-sm ml-1">Repetir Contraseña</label>
+                    <input type="password" id="password_rep" placeholder="••••••••" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate">
                 </div>
-                
-                <button type="button" id="button_enviar" class="mt-4 bg-DeepSlate text-OatmilkFoam font-bold text-lg py-3 rounded-2xl hover:bg-DeepSlateDark active:scale-95 transition-all">
-                    ENTRAR
-                </button>
+                <button type="button" id="button_enviar" class="mt-4 bg-DeepSlate text-OatmilkFoam font-bold text-lg py-3 rounded-2xl hover:bg-DeepSlateDark active:scale-95 transition-all">ENTRAR</button>
             </form>
         </div>
     </div>
 
     <script src="../assets/js/app.js"></script>
+    <script>
+        // Logica para calculos en tiempo real
+        const healthIds = ['peso', 'altura', 'grasa', 'cintura'];
+        healthIds.forEach(id => {
+            const input = document.getElementById(`in-${id}`);
+            if(input) {
+                input.addEventListener('input', () => {
+                    const p = parseFloat(document.getElementById('in-peso').value) || 0;
+                    const a = parseFloat(document.getElementById('in-altura').value) || 0;
+                    if(p > 0 && a > 100) {
+                        const m = a / 100;
+                        document.getElementById('res-peso').innerText = (22 * (m * m)).toFixed(1) + ' kg';
+                        document.getElementById('res-cintura').innerText = Math.round(a * 0.47) + ' cm';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
