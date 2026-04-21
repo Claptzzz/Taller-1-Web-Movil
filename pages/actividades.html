@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Actividades</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style type="text/tailwindcss">
+        @theme {
+            --color-OatmilkFoam: #F8F4EF;
+            --color-DeepSlate: #40434E;
+            --color-DeepSlateDark: #353741;
+            --color-DeepSlateLight: #5E6373;
+        }
+    </style>
+</head>
+<body class="bg-OatmilkFoam flex flex-col min-h-screen items-center m-auto px-4">
+
+    <!-- HEADER ORIGINAL (MANTENIDO) -->
+    <header class="flex sticky top-5 z-50 w-full max-w-3xl mt-5 p-3 px-6 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
+        <h1 class="font-bold text-xl tracking-tighter uppercase">NOMBRE</h1>
+        <nav class="flex gap-2 max-sm:mt-4">
+            <a href="index.html" class="hover:bg-gray-500/40 px-4 py-1 rounded-lg transition-all text-sm font-bold">HOME</a>
+            <a href="index.html#how_to_use" class="hover:bg-gray-500/40 px-4 py-1 rounded-lg transition-all text-sm font-bold">HOW TO USE</a>
+            <a href="index.html#about" class="hover:bg-gray-500/40 px-4 py-1 rounded-lg transition-all text-sm font-bold">ABOUT US</a>
+            <a href="perfil.html" class="ml-2">
+                <svg class="fill-OatmilkFoam" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
+            </a>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL: CALENDARIO Y ORGANIZADOR -->
+    <main class="w-full max-w-5xl mt-16 flex flex-col lg:flex-row gap-8 pb-20">
+        
+        <!-- SECCIÓN CALENDARIO -->
+        <section class="bg-DeepSlate p-8 rounded-[2.5rem] shadow-2xl flex-grow border border-white/5">
+            <header class="flex justify-between items-center mb-8 text-OatmilkFoam">
+                <h2 class="text-2xl font-black uppercase tracking-tighter italic">Abril 2026</h2>
+                <nav class="flex gap-4">
+                    <button class="bg-white/10 hover:bg-white/20 p-2 rounded-xl transition-all cursor-pointer">&larr;</button>
+                    <button class="bg-white/10 hover:bg-white/20 p-2 rounded-xl transition-all cursor-pointer">&rarr;</button>
+                </nav>
+            </header>
+
+            <table class="w-full text-OatmilkFoam border-separate border-spacing-2">
+                <thead>
+                    <tr class="text-xs font-bold uppercase opacity-50">
+                        <th class="pb-4">Lun</th>
+                        <th class="pb-4">Mar</th>
+                        <th class="pb-4">Mié</th>
+                        <th class="pb-4">Jue</th>
+                        <th class="pb-4">Vie</th>
+                        <th class="pb-4">Sáb</th>
+                        <th class="pb-4">Dom</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center font-bold">
+                    <!-- Ejemplo de días del calendario -->
+                    <tr>
+                        <td class="p-3 bg-white/5 rounded-2xl opacity-30 italic">30</td>
+                        <td class="p-3 bg-white/5 rounded-2xl opacity-30 italic">31</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">1</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">2</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer text-sky-200 border border-sky-200/50">3</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">4</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">5</td>
+                    </tr>
+                    <!-- ... Más filas representadas ... -->
+                    <tr>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">6</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">7</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">8</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">9</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer font-black ring-2 ring-OatmilkFoam">10</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer">11</td>
+                        <td class="p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer text-sky-200">12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECCIÓN AGREGAR / LISTADO DEL DÍA -->
+        <aside class="flex flex-col gap-6 w-full lg:w-96">
+            <article class="bg-DeepSlateLight p-8 rounded-[2.5rem] text-OatmilkFoam shadow-xl">
+                <h3 class="text-xl font-bold mb-6 uppercase tracking-widest border-b border-white/10 pb-2 text-center">Hoy: Viernes 10</h3>
+                
+                <form class="flex flex-col gap-4">
+                    <label class="flex flex-col gap-2 italic text-sm">
+                        Nueva Actividad
+                        <input type="text" placeholder="Ej: Running 5km" class="bg-OatmilkFoam text-DeepSlate p-3 rounded-xl font-bold outline-none">
+                    </label>
+                    <label class="flex flex-col gap-2 italic text-sm">
+                        Hora
+                        <input type="time" class="bg-OatmilkFoam text-DeepSlate p-3 rounded-xl font-bold outline-none">
+                    </label>
+                    <button type="button" class="mt-2 bg-DeepSlate text-OatmilkFoam font-black py-4 rounded-2xl border-2 border-OatmilkFoam hover:bg-OatmilkFoam hover:text-DeepSlate transition-all uppercase tracking-widest text-xs">
+                        AGREGAR AL DÍA
+                    </button>
+                </form>
+            </article>
+
+            <article class="bg-white p-6 rounded-[2.5rem] shadow-lg border border-DeepSlate/5 flex-grow">
+                <h4 class="font-black text-DeepSlate uppercase text-center mb-6 tracking-tighter">Planificación del día</h4>
+                <ul class="flex flex-col gap-3">
+                    <li class="flex justify-between items-center bg-OatmilkFoam p-4 rounded-2xl border-l-4 border-DeepSlate">
+                        <span class="font-bold text-DeepSlate text-sm uppercase italic">Yoga matutino</span>
+                        <span class="text-xs font-black opacity-50 uppercase tracking-tighter">07:00 AM</span>
+                    </li>
+                    <li class="flex justify-between items-center bg-OatmilkFoam p-4 rounded-2xl border-l-4 border-sky-400">
+                        <span class="font-bold text-DeepSlate text-sm uppercase italic">Snack saludable</span>
+                        <span class="text-xs font-black opacity-50 uppercase tracking-tighter">11:30 AM</span>
+                    </li>
+                </ul>
+            </article>
+        </aside>
+
+    </main>
+
+    <script>
+        //Script para manejar calendario y actividades diarias, temporal
+        // Obtener fecha actual
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); // 0-based
+        const currentDay = today.getDate();
+
+        // Objeto para almacenar actividades por fecha (ej: '2026-04-10')
+        let actividades = JSON.parse(localStorage.getItem('actividades')) || {};
+
+        // Día seleccionado actualmente (por defecto, hoy)
+        let diaSeleccionado = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${currentDay.toString().padStart(2, '0')}`;
+
+        // Elementos del DOM
+        const calendarioHeader = document.querySelector('h2'); // "Abril 2026"
+        const calendarioTbody = document.querySelector('tbody');
+        const formActividad = document.querySelector('form');
+        const inputActividad = document.querySelector('input[placeholder="Ej: Running 5km"]');
+        const inputHora = document.querySelector('input[type="time"]');
+        const btnAgregar = document.querySelector('button[type="button"]');
+        const listaActividades = document.querySelector('ul');
+        const tituloDia = document.querySelector('h3'); // "Hoy: Viernes 10"
+
+        // Función para generar el calendario
+        function generarCalendario() {
+            calendarioHeader.textContent = today.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).replace(/^\w/, c => c.toUpperCase());
+
+            calendarioTbody.innerHTML = '';
+
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // Lunes como primer día
+
+            let day = 1;
+            for (let week = 0; week < 6; week++) {
+                const tr = document.createElement('tr');
+                for (let wd = 0; wd < 7; wd++) {
+                    const td = document.createElement('td');
+                    td.className = 'p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer';
+                    if (week === 0 && wd < startDay) {
+                        td.classList.add('opacity-30', 'italic');
+                        td.textContent = '';
+                    } else if (day > lastDay.getDate()) {
+                        td.classList.add('opacity-30', 'italic');
+                        td.textContent = '';
+                    } else {
+                        td.textContent = day;
+                        if (day === currentDay) {
+                            td.classList.add('bg-sky-200', 'text-DeepSlate', 'ring-2', 'ring-OatmilkFoam');
+                        }
+                        day++;
+                    }
+                    tr.appendChild(td);
+                }
+                calendarioTbody.appendChild(tr);
+                if (day > lastDay.getDate()) break;
+            }
+        }
+
+        // Función para actualizar la lista de actividades del día seleccionado
+        function actualizarLista() {
+            listaActividades.innerHTML = '';
+            const acts = actividades[diaSeleccionado] || [];
+            acts.forEach(act => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center bg-OatmilkFoam p-4 rounded-2xl border-l-4 border-DeepSlate';
+                li.innerHTML = `
+                    <span class="font-bold text-DeepSlate text-sm uppercase italic">${act.nombre}</span>
+                    <span class="text-xs font-black opacity-50 uppercase tracking-tighter">${act.hora}</span>
+                `;
+                listaActividades.appendChild(li);
+            });
+        }
+
+        // Función para formatear fecha
+        function formatearFecha(dia) {
+            return `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
+        }
+
+        // Event listeners para días del calendario (delegación de eventos)
+        calendarioTbody.addEventListener('click', (e) => {
+            if (e.target.tagName === 'TD' && !e.target.classList.contains('opacity-30')) {
+                // Quitar selección anterior
+                document.querySelectorAll('tbody td').forEach(cell => cell.classList.remove('bg-sky-200', 'text-DeepSlate', 'ring-2', 'ring-OatmilkFoam'));
+                
+                // Seleccionar nuevo día
+                e.target.classList.add('bg-sky-200', 'text-DeepSlate', 'ring-2', 'ring-OatmilkFoam');
+                const dia = parseInt(e.target.textContent.trim());
+                diaSeleccionado = formatearFecha(dia);
+                
+                // Actualizar título del día
+                const fecha = new Date(diaSeleccionado);
+                const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                tituloDia.textContent = `Hoy: ${diasSemana[fecha.getDay()]} ${dia}`;
+                
+                // Actualizar lista
+                actualizarLista();
+            }
+        });
+
+        // Event listener para agregar actividad
+        btnAgregar.addEventListener('click', () => {
+            const nombre = inputActividad.value.trim();
+            const hora = inputHora.value;
+            if (nombre && hora) {
+                if (!actividades[diaSeleccionado]) actividades[diaSeleccionado] = [];
+                actividades[diaSeleccionado].push({ nombre, hora });
+                localStorage.setItem('actividades', JSON.stringify(actividades));
+                inputActividad.value = '';
+                inputHora.value = '';
+                actualizarLista();
+            }
+        });
+
+        // Inicializar
+        generarCalendario();
+        actualizarLista();
+    </script>
+
+</body>
+</html>
