@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Alimentación</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style type="text/tailwindcss">
+        @theme {
+            --color-OatmilkFoam: #F8F4EF;
+            --color-DeepSlate: #40434E;
+            --color-DeepSlateDark: #353741;
+            --color-DeepSlateLight: #5E6373;
+        }
+    </style>
+</head>
+<body class="bg-OatmilkFoam flex flex-col min-h-screen items-center m-auto px-4">
+
+    <!-- HEADER -->
+    <header class="flex sticky top-5 z-50 max-sm:w-full lg:w-3xl sm:w-lg m-auto mt-5 p-3 pl-4 pr-4 justify-between items-center rounded-3xl bg-DeepSlate/70 backdrop-blur-md border border-white/10 shadow-lg text-OatmilkFoam max-sm:flex-col">
+        <h1 class="flex font-bold text-xl max-lg:text-lg tracking-tighter">NOMBRE</h1>
+        <div class="flex flex-row justify-between items-center max-sm:relative">
+            <nav class="flex flex-row gap-1 max-lg:text-sm max-lg:mr-5 max-lg:ml-5 lg:ml-5 lg:mr-5">
+                <a href="../index.html#home" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg">HOME</a>
+                <a href="../index.html#how_to_use" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg">HOW TO USE</a>
+                <a href="../index.html#about" class="hover:bg-gray-500/40 hover:text-sky-200 transition-all pl-4 pr-4 rounded-lg">ABOUT US</a>
+            </nav>
+            <div id="perfil" class="ml-2 max-sm:flex max-sm:absolute max-sm:-top-6 max-sm:-right-5">
+                <a href="perfil.html">
+                    <svg class="fill-OatmilkFoam mr-1 max-sm:w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28"><path d="m16,23.314c-1.252.444-2.598.686-4,.686s-2.748-.242-4-.686v-2.314c0-2.206,1.794-4,4-4s4,1.794,4,4v2.314ZM12,7c-1.103,0-2,.897-2,2s.897,2,2,2,2-.897,2-2-.897-2-2-2Zm12,5c0,4.433-2.416,8.311-6,10.389v-1.389c0-3.309-2.691-6-6-6s-6,2.691-6,6v1.389C2.416,20.311,0,16.433,0,12,0,5.383,5.383,0,12,0s12,5.383,12,12Zm-8-3c0-2.206-1.794-4-4-4s-4,1.794-4,4,1.794,4,4,4,4-1.794,4-4Z"/></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-6xl mt-16 flex flex-col md:flex-row gap-8 pb-20 items-start">
+        
+        <!-- SECCIÓN LATERAL: AGUA Y HÁBITOS -->
+        <aside class="flex flex-col gap-6 w-full md:w-1/3">
+            
+            <!-- Ingesta de Agua -->
+            <article class="bg-DeepSlate p-6 rounded-3xl text-OatmilkFoam shadow-lg">
+                <h2 class="text-center text-xl font-bold mb-4 uppercase tracking-tighter">Ingesto de agua</h2>
+                <form class="flex gap-4">
+                    <label class="flex flex-col gap-1 text-[10px] uppercase font-bold opacity-70 italic">
+                        Recomendado
+                        <input type="text" placeholder="2.5L" class="bg-OatmilkFoam text-DeepSlate p-2 rounded-lg w-full outline-none font-bold">
+                    </label>
+                    <label class="flex flex-col gap-1 text-[10px] uppercase font-bold opacity-70 italic">
+                        Actual
+                        <input type="text" placeholder="1.2L" class="bg-OatmilkFoam text-DeepSlate p-2 rounded-lg w-full outline-none font-bold">
+                    </label>
+                </form>
+            </article>
+
+            <!-- Hábitos Saludables -->
+            <article class="bg-DeepSlate p-6 rounded-3xl text-OatmilkFoam shadow-lg">
+                <h2 class="text-center text-xl font-bold mb-6 uppercase tracking-tighter">Habitos saludables</h2>
+                <ul class="flex flex-col gap-4">
+                    <!--VEGETALES -->
+                    <li class="flex items-center gap-3">
+                        <input type="checkbox" class="w-5 h-5 accent-DeepSlateLight cursor-pointer">
+                        <span class="text-sm font-medium italic">¿Comi vegetales hoy?</span>
+                    </li>
+                    <!--AZUCAR -->
+                    <li class="flex items-center gap-3">
+                        <input type="checkbox" class="w-5 h-5 accent-DeepSlateLight cursor-pointer">
+                        <span class="text-sm font-medium italic">¿Evite excesos de azucar?</span>
+                    </li>
+                    <!--PROTEINA -->
+                    <li class="flex items-center gap-3">
+                        <input type="checkbox" class="w-5 h-5 accent-DeepSlateLight cursor-pointer">
+                        <span class="text-sm font-medium italic">¿Consumi proteina?</span>
+                    </li>
+                    <!--FRUTA -->
+                    <li class="flex items-center gap-3">
+                        <input type="checkbox" class="w-5 h-5 accent-DeepSlateLight cursor-pointer">
+                        <span class="text-sm font-medium italic">¿Consumi fruta?</span>
+                    </li>
+                </ul>
+            </article>
+        </aside>
+
+        <!-- SECCIÓN DE COMIDAS -->
+        <section class="bg-DeepSlate rounded-3xl shadow-2xl flex-grow grid grid-cols-2 lg:grid-cols-4 gap-4 overflow-hidden border border-white/5">
+            
+            <!-- Columna Desayuno -->
+            <article class="border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="desayuno">
+                <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Desayuno</h3>
+                <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
+                <button type="button" onclick="openModal('desayuno')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
+            </article>
+
+            <!-- Columna Almuerzo -->
+            <article class="border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="almuerzo">
+                <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Almuerzo</h3>
+                <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
+                <button type="button" onclick="openModal('almuerzo')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
+            </article>
+
+            <!-- Columna Cena -->
+            <article class="border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="cena">
+                <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Cena</h3>
+                <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
+                <button type="button" onclick="openModal('cena')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
+            </article>
+
+            <!-- Columna Snacks -->
+            <article class="p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="snacks">
+                <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Snacks</h3>
+                <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
+                <button type="button" onclick="openModal('snacks')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
+            </article>
+
+        </section>
+
+    </main>
+
+    <!-- Modal para agregar comida -->
+    <dialog id="mealModal" class="rounded-2xl p-6 bg-DeepSlate text-OatmilkFoam max-w-md w-full">
+        <form method="dialog" class="flex flex-col gap-4">
+            <h2 class="text-xl font-bold uppercase tracking-tighter">Agregar comida</h2>
+            
+            <label for="foodDescription" class="flex flex-col gap-2">
+                <span class="text-sm font-bold uppercase opacity-70">Descripción de la comida</span>
+                <input 
+                    type="text" 
+                    id="foodDescription" 
+                    placeholder="Ej: Pan tostado con mermelada" 
+                    class="bg-OatmilkFoam text-DeepSlate p-3 rounded-lg outline-none font-medium"
+                    required
+                >
+            </label>
+            
+            <menu class="flex gap-3 justify-end mt-4">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-lg bg-DeepSlateDark hover:bg-DeepSlateLight transition-all text-OatmilkFoam font-bold uppercase text-sm">Cancelar</button>
+                <button type="button" onclick="addFood()" class="px-4 py-2 rounded-lg bg-OatmilkFoam text-DeepSlate hover:bg-white transition-all font-bold uppercase text-sm">Agregar</button>
+            </menu>
+        </form>
+    </dialog>
+
+    <!-- Script para la funcionalidad del modal -->
+    <script>
+        let currentMeal = null;
+
+        function openModal(mealType) {
+            currentMeal = mealType;
+            const modal = document.getElementById('mealModal');
+            const input = document.getElementById('foodDescription');
+            input.value = '';
+            modal.showModal();
+            input.focus();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('mealModal');
+            modal.close();
+            currentMeal = null;
+        }
+
+        function addFood() {
+            const input = document.getElementById('foodDescription');
+            const description = input.value.trim();
+
+            if (description === '') {
+                alert('Por favor ingresa una descripción de la comida');
+                return;
+            }
+
+            if (!currentMeal) return;
+
+            // Encontrar la columna de comida correspondiente
+            const mealArticle = document.querySelector(`article[data-meal="${currentMeal}"]`);
+            if (!mealArticle) return;
+
+            const foodsContainer = mealArticle.querySelector('.foods');
+
+            // Crear elemento de comida
+            const foodItem = document.createElement('li');
+            foodItem.className = 'bg-OatmilkFoam text-DeepSlate p-3 rounded-lg font-medium text-sm text-center break-words';
+            foodItem.textContent = description;
+
+            foodsContainer.appendChild(foodItem);
+
+            closeModal();
+        }
+
+        // Permitir envío con Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('foodDescription');
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    addFood();
+                }
+            });
+        });
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('mealModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
