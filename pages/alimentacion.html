@@ -41,8 +41,8 @@
             
             <!-- Ingesta de Agua -->
             <article class="bg-DeepSlate p-6 rounded-3xl text-OatmilkFoam shadow-lg">
-                <h2 class="text-center text-xl font-bold mb-4 uppercase tracking-tighter">Ingesto de agua</h2>
-                <form class="flex gap-4">
+                <h2 class="text-center text-xl font-bold mb-4 uppercase tracking-tighter flex justify-center">Ingesto de agua</h2>
+                <form class="flex gap-4 justify-center">
                     <label class="flex flex-col gap-1 text-[10px] uppercase font-bold opacity-70 italic">
                         Recomendado
                         <input type="text" placeholder="2.5L" class="bg-OatmilkFoam text-DeepSlate p-2 rounded-lg w-full outline-none font-bold">
@@ -83,30 +83,26 @@
         </aside>
 
         <!-- SECCIÓN DE COMIDAS -->
-        <section class="bg-DeepSlate rounded-3xl shadow-2xl flex-grow grid grid-cols-2 lg:grid-cols-4 gap-4 overflow-hidden border border-white/5">
+        <section class="w-full bg-DeepSlate rounded-3xl shadow-2xl flex-grow grid grid-cols-2 lg:grid-cols-4 gap-4 overflow-hidden border border-white/5">
             
-            <!-- Columna Desayuno -->
-            <article class="border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="desayuno">
+            <article class="border-r border-b lg:border-b-0 border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="desayuno">
                 <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Desayuno</h3>
                 <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
                 <button type="button" onclick="openModal('desayuno')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
             </article>
 
-            <!-- Columna Almuerzo -->
-            <article class="border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="almuerzo">
+            <article class="border-b lg:border-b-0 lg:border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="almuerzo">
                 <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Almuerzo</h3>
                 <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
                 <button type="button" onclick="openModal('almuerzo')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
             </article>
 
-            <!-- Columna Cena -->
             <article class="border-r border-white/10 p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="cena">
                 <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Cena</h3>
                 <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
                 <button type="button" onclick="openModal('cena')" class="bg-OatmilkFoam text-DeepSlate text-[10px] font-bold py-2 px-4 rounded-lg hover:bg-white transition-all uppercase">Agregar comida</button>
             </article>
 
-            <!-- Columna Snacks -->
             <article class="p-6 flex flex-col items-center min-h-[300px] md:min-h-[500px]" data-meal="snacks">
                 <h3 class="text-OatmilkFoam text-lg font-bold mb-auto uppercase tracking-widest">Snacks</h3>
                 <ul class="foods w-full flex flex-col gap-2 mb-4 list-none"></ul>
