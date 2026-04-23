@@ -118,7 +118,7 @@
     </main>
 
     <!-- Modal para agregar comida -->
-    <dialog id="mealModal" class="rounded-2xl p-6 bg-DeepSlate text-OatmilkFoam max-w-md w-full">
+    <dialog id="mealModal" class="m-auto fixed inset-0 backdrop:bg-black/60 backdrop:backdrop-blur-sm rounded-2xl p-6 bg-DeepSlate text-OatmilkFoam max-w-md w-full">
         <form method="dialog" class="flex flex-col gap-4">
             <h2 class="text-xl font-bold uppercase tracking-tighter">Agregar comida</h2>
             
@@ -140,69 +140,6 @@
         </form>
     </dialog>
 
-    <!-- Script para la funcionalidad del modal -->
-    <script>
-        let currentMeal = null;
-
-        function openModal(mealType) {
-            currentMeal = mealType;
-            const modal = document.getElementById('mealModal');
-            const input = document.getElementById('foodDescription');
-            input.value = '';
-            modal.showModal();
-            input.focus();
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('mealModal');
-            modal.close();
-            currentMeal = null;
-        }
-
-        function addFood() {
-            const input = document.getElementById('foodDescription');
-            const description = input.value.trim();
-
-            if (description === '') {
-                alert('Por favor ingresa una descripción de la comida');
-                return;
-            }
-
-            if (!currentMeal) return;
-
-            // Encontrar la columna de comida correspondiente
-            const mealArticle = document.querySelector(`article[data-meal="${currentMeal}"]`);
-            if (!mealArticle) return;
-
-            const foodsContainer = mealArticle.querySelector('.foods');
-
-            // Crear elemento de comida
-            const foodItem = document.createElement('li');
-            foodItem.className = 'bg-OatmilkFoam text-DeepSlate p-3 rounded-lg font-medium text-sm text-center break-words';
-            foodItem.textContent = description;
-
-            foodsContainer.appendChild(foodItem);
-
-            closeModal();
-        }
-
-        // Permitir envío con Enter
-        document.addEventListener('DOMContentLoaded', function() {
-            const input = document.getElementById('foodDescription');
-            input.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    addFood();
-                }
-            });
-        });
-
-        // Cerrar modal al hacer clic fuera
-        document.getElementById('mealModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeModal();
-            }
-        });
-    </script>
-
+    <script src="../assets/js/alimentacion.js"></script>
 </body>
 </html>

@@ -55,3 +55,20 @@ btn_tabs.forEach((tab, index) => {
         contents[index].classList.remove('hidden');
     })
 })
+
+// Logica para calculos en tiempo real
+const healthIds = ['peso', 'altura', 'grasa', 'cintura'];
+healthIds.forEach(id => {
+    const input = document.getElementById(`in-${id}`);
+    if(input) {
+        input.addEventListener('input', () => {
+            const p = parseFloat(document.getElementById('in-peso').value) || 0;
+            const a = parseFloat(document.getElementById('in-altura').value) || 0;
+            if(p > 0 && a > 100) {
+                const m = a / 100;
+                document.getElementById('res-peso').innerText = (22 * (m * m)).toFixed(1) + ' kg';
+                document.getElementById('res-cintura').innerText = Math.round(a * 0.47) + ' cm';
+            }
+        });
+    }
+});
