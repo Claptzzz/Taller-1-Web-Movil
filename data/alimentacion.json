@@ -1,0 +1,19 @@
+{
+    "usuario": "Cristian Nettle",
+    "agua": {
+        "recomendado": "2.5L",
+        "actual": "1.2L"
+    },
+    "habitos": {
+        "vegetales": true,
+        "azucar": false,
+        "proteina": true,
+        "fruta": true
+    },
+    "comidas": {
+        "desayuno": ["Pan tostado con palta", "Café con leche"],
+        "almuerzo": ["Pollo a la plancha", "Arroz integral", "Ensalada"],
+        "cena": ["Sopa de verduras", "Tostada"],
+        "snacks": ["Manzana", "Yogurt natural"]
+    }
+}

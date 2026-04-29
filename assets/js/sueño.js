@@ -1,5 +1,5 @@
 const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-const sleepHours = [0, 0, 0, 0, 0, 0, 0];
+let sleepHours = [0, 0, 0, 0, 0, 0, 0];
 
 const ctx = document.getElementById('sleepChart').getContext('2d');
 const sleepChart = new Chart(ctx, {
@@ -35,6 +35,13 @@ const sleepChart = new Chart(ctx, {
         }
     }
 });
+
+if (localStorage.getItem('tipoSesion') === 'login') {
+    fetch('../data/sueno.json').then(res => res.json()).then(data => {
+        sleepChart.data.datasets[0].data = data.horas;
+        sleepChart.update();
+    });
+}
 
 function calcularHorasDormidas(horaInicio, horaFin) {
     const [horaIni, minIni] = horaInicio.split(':').map(Number);

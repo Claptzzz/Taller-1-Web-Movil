@@ -1,0 +1,16 @@
+{
+    "usuario": "Cristian Nettle",
+    "actividades": {
+        "2026-04-27": [
+            { "nombre": "Running 5km", "hora": "07:00" },
+            { "nombre": "Gimnasio", "hora": "18:30" }
+        ],
+        "2026-04-28": [
+            { "nombre": "Yoga", "hora": "08:00" }
+        ],
+        "2026-04-29": [
+            { "nombre": "Caminata", "hora": "07:30" },
+            { "nombre": "Bicicleta", "hora": "19:00" }
+        ]
+    }
+}

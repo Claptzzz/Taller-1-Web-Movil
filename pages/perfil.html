@@ -73,8 +73,9 @@
     <!--PERFIL DESARROLLADO-->
     <main id="content_tabs" class="hidden w-full max-w-5xl mt-12 pb-20">
         
-        <header class="text-center mb-10">
+        <header class="text-center mb-10 flex flex-col items-center gap-4">
             <h2 class="text-2xl font-bold uppercase tracking-widest text-DeepSlate">Bienvenido, *nombre de usuario*</h2>
+            <button type="button" id="button_logout" class="bg-DeepSlate text-OatmilkFoam text-xs font-bold uppercase tracking-wider px-5 py-2 rounded-2xl hover:bg-DeepSlateDark active:scale-95 transition-all">Cerrar Sesion</button>
         </header>
 
         <!--FORMULARIO DE DATOS-->
@@ -143,6 +144,11 @@
                     <input type="password" id="password_rep" placeholder="••••••••" class="border-2 border-DeepSlate/20 bg-transparent rounded-xl p-3 focus:outline-none focus:border-DeepSlate">
                 </div>
                 <button type="button" id="button_enviar" class="mt-4 bg-DeepSlate text-OatmilkFoam font-bold text-lg py-3 rounded-2xl hover:bg-DeepSlateDark active:scale-95 transition-all">ENTRAR</button>
+                <div id="mock_credentials" class="mt-2 p-3 rounded-xl bg-DeepSlate/10 border border-DeepSlate/20 text-xs text-DeepSlate text-center">
+                    <p class="font-bold uppercase tracking-wider mb-1">Credenciales de prueba</p>
+                    <p>Email: <span class="font-mono font-bold">cristian.nettle@ucn.cl</span></p>
+                    <p>Contraseña: <span class="font-mono font-bold">nettle123</span></p>
+                </div>
             </form>
         </div>
     </div>
