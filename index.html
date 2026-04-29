@@ -25,20 +25,20 @@
     
     <!--HEADER GLOSSY--> <!--ULTIMA VERSION DEL HEADER-->
     <header class="flex sticky top-5 z-50 w-[95%] lg:w-3xl mx-auto mt-5 p-3 px-6 justify-between items-center rounded-3xl bg-DeepSlate/80 backdrop-blur-md border border-white/10 shadow-xl text-OatmilkFoam max-sm:flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <a id="logo_link" href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <svg class="h-7 w-7">
                 <use xlink:href="assets/img/sprites.svg#logo-icon" />
             </svg>
             <h1 class="font-bold text-xl tracking-tighter">SLEEPWELL</h1>
-        </div>
+        </a>
         <div class="flex flex-row justify-between items-center">
-            <nav class="flex flex-row gap-2 text-sm font-medium">
+            <nav id="main_nav" class="flex flex-row gap-2 text-sm font-medium">
                 <a href="#hero" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">INICIO</a>
                 <a href="#how_to_use" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">MÉTODO</a>
                 <a href="#about" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">NOSOTROS</a>
             </nav>
             <div id="perfil" class="ml-4">
-                <a href="pages/perfil.html" class="hover:text-sky-200 transition-colors">
+                <a id="perfil_link" href="pages/perfil.html" class="hover:text-sky-200 transition-colors">
                     <svg class="h-7 w-7">
                         <use xlink:href="assets/img/sprites.svg#user-icon" />
                     </svg>
@@ -53,14 +53,14 @@
         <article class="relative z-20 max-w-2xl pb-3">
             <h1 class="text-4xl md:text-4xl lg:text-5xl font-bold mb-8 max-w-2xl">TUS HORAS DE SUEÑO NOS <span class="text-sky-600">IMPORTAN!</span></h1>
             <p class="text-lg md:text-2xl mb-12 max-w-3xl">Analizamos tu rutina diaria para optimizar tus ciclos de sueño y mejorar tu calidad de vida.</p>
-            <button type="button" class="bg-OatmilkFoam/80 backdrop-blur-md text-DeepSlate border border-white/10 shadow-lg font-bold text-lg md:text-xl py-5 px-12 rounded-4xl hover:bg-sky-200 active:scale-95 transition-all">
-                <section class="inline-flex gap-2">
-                    <p>COMENZAR ANALISIS</p>
+            <a href="pages/perfil.html#login" class="inline-block bg-OatmilkFoam/80 backdrop-blur-md text-DeepSlate border border-white/10 shadow-lg font-bold text-lg md:text-xl py-5 px-12 rounded-4xl hover:bg-sky-200 active:scale-95 transition-all">
+                <span class="inline-flex gap-2 items-center">
+                    <span>COMENZAR ANALISIS</span>
                     <svg class="h-7 w-7">
                         <use xlink:href="assets/img/sprites.svg#flecha-icon" />
                     </svg>
-                </section>
-            </button>
+                </span>
+            </a>
         </article>
     </article>
 
@@ -130,6 +130,7 @@
     <footer class="bg-OatmilkFoam p-4">
         <p>&copy 2026 SleepWell App. Todos los derechos reservados. </p>
     </footer>
-    
+
+    <script src="assets/js/navbar.js"></script>
 </body>
 </html>

@@ -35,12 +35,21 @@ function submit_pop() {
     auth_login.classList.add('hidden')
     tabs_perfil.classList.remove('hidden')
     tabs_content.classList.remove('hidden')
+    if (typeof iniciarSesion === 'function') {
+        iniciarSesion();
+    }
     close_pop();
 }
 
 loginBtn.addEventListener('click', () => {open_pop('login')});
 registerBtn.addEventListener('click', () => {open_pop('register')});
 closeBtn.addEventListener('click', () => {close_pop()});
+
+if (window.location.hash === '#login') {
+    open_pop('login');
+} else if (window.location.hash === '#register') {
+    open_pop('register');
+}
 
 submitModalBtn.addEventListener('click', () => {submit_pop()});
 
