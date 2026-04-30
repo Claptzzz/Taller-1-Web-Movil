@@ -9,7 +9,6 @@ const logoutBtn = document.getElementById('button_logout');
 const rep_pass = document.getElementById('rep_pass');
 const mock_credentials = document.getElementById('mock_credentials');
 const auth_login = document.getElementById('auth_login');
-const tabs_perfil = document.getElementById('tabs_perfil');
 const tabs_content = document.getElementById('content_tabs');
 
 let usuario = null;
@@ -21,7 +20,6 @@ fetch('../data/usuario.json')
         usuario = data;
         if (localStorage.getItem('sesionIniciada') === 'true') {
             auth_login.classList.add('hidden');
-            tabs_perfil.classList.remove('hidden');
             tabs_content.classList.remove('hidden');
 
             if (localStorage.getItem('tipoSesion') === 'login') {
@@ -98,7 +96,6 @@ function submit_pop() {
     }
 
     auth_login.classList.add('hidden');
-    tabs_perfil.classList.remove('hidden');
     tabs_content.classList.remove('hidden');
 
     localStorage.setItem('tipoSesion', modoActual);
@@ -131,7 +128,6 @@ submitModalBtn.addEventListener('click', () => {submit_pop()});
 function logout() {
     localStorage.removeItem('tipoSesion');
     auth_login.classList.remove('hidden');
-    tabs_perfil.classList.add('hidden');
     tabs_content.classList.add('hidden');
 
     document.getElementById('email').value = '';
