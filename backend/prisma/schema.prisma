@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Usuario {
+  id         String   @id @default(uuid())
+  nombre     String
+  correo     String   @unique
+  contrasena String
+
+  metricas       Metrica[]
+  suenos         Sueno[]
+  actividades    Actividad[]
+  comidas        Comida[]
+  habitosYAguas  HabitosyAgua[]
+}
+
+model Metrica {
+  id            Int      @id @default(autoincrement())
+  idUsuario     String
+  usuario       Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
+  peso          Float
+  altura        Float
+  cintura       Float
+  grasa         Float?
+  fecha_metrica DateTime @default(now())
+}
+
+model Sueno {
+  id            Int      @id @default(autoincrement())
+  idUsuario     String
+  usuario       Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
+  horasDormidas Float
+  calidadSueno  String   // En SQLite guardaremos "ALTA", "MEDIA" o "BAJA" como texto
+  fechaSueno    DateTime
+}
+
+model Actividad {
+  id            Int      @id @default(autoincrement())
+  idUsuario     String
+  usuario       Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
+  descripcion   String
+  hora          String
+  fecha         DateTime
+}
+
+model Comida {
+  id            Int      @id @default(autoincrement())
+  idUsuario     String
+  usuario       Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
+  nombre        String
+  categoria     String   // En SQLite guardaremos "DESAYUNO", "ALMUERZO", etc. como texto
+  fecha         DateTime
+}
+
+model HabitosyAgua {
+  id               Int      @id @default(autoincrement())
+  idUsuario        String
+  usuario          Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
+  aguaConsumida    Float
+  aguaRecomendada  Float
+  vegetales        Boolean
+  azucar           Boolean
+  proteina         Boolean
+  fruta            Boolean
+  fecha            DateTime
+
+  @@unique([idUsuario, fecha])
+}

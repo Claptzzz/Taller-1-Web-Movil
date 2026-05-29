@@ -1,0 +1,178 @@
+“Analizar el problema asignado e identificar las entidades, relaciones y reglas de negocio principales del sistema. “
+
+Reglas de negocio
+Validacion: No se permiten registros con valores negativos o vacios en metricas corporales (peso,altura,cintura,grasa).
+Calculo: La api debe calcular automaticamente el IMC y el porcentaje de grasa ideal cada vez que el usuario actualice sus datos biometricos.
+Consistencia cronologica: Los registros de sueño y alimentacion deben estar asociados obligatoriamente a una fecha y a un usuario unico para poder alimentar el calendario historico de forma coherente.
+
+Entidades
+1.Usuario: Guarda credenciales y datos de acceso el usuario
+    Id (PK, string): Identificador unico del usuario
+    Nombre (String): Nombre del usuario
+    Correo (String, unico): correo electronico del usuario
+    Contraseña (string): contraseña del usuario
+2.Metrica: Almacena datos de estado fisico
+    id (PK, int): identificador unico de la metrica particular del usuario
+    idUsuario (FK, string): id del usuario al que le pertenece la metrica
+    peso (Float): peso del usuario en kilogramos, debe ser mayor a 0
+    altura (Float): altura del usuario en centimetros, debe ser mayor a 0
+    cintura (Float): Medida de la cintura del usuario en centimetros, debe ser mayor a 0
+    grasa (Float): porcentaje de grasa del usuario, debe ser mayor a 0 y puede ser opcional
+    fecha_metrica (Date): Fecha en la que el usuario creo la metrica
+3.Sueño: Almacena una entrada de sueño
+    id (PK, int): identificador unico de la entrada
+    idUsuario (FK, string): id del usuario al que le pertenece el historial
+    horasDormidas (Float): Horas que el usuario cree haber dormido
+    calidadSueño(Enum: Alta, Media, Baja): Calidad de sueño que el usuario sintio
+    fechaSueño (Date): dia en el que introdujo los datos
+4.Actividad: Almacena tareas que el usuario agenda en su calendario
+    id (PK, int): identificador de la actividad del usuario
+    idUsuario (FK, string): id del usuario que le pertenece la actividad
+    descripcion (string): descripcion de la actividad
+    hora (String): hora fijada de la actividad
+    fecha (date): fecha de la actividad
+5.comida: almacena las comida ingresadas por el usuario (desayuno, almuerzo, cena, snacks)
+    id (PK, int): identificador unico de la comida
+    idUsuario (FK, string): identificador del usuario
+    nombre (string): nombre de la comida
+    categoria (Enum: DESAYUNO, ALMUERZO, CENA, SNACKS): categoria a la que entra la comida ingresada
+6.habitosyagua: Almacena estado de litros de agua consumido/recomendado y los checks de habitos saludables del dia
+    id (PK, int): identificador de la tabla
+    idUsuario (FK, string) identificador del usuario al que le pertenece el registro
+    aguaConsumida (float): cantidad de agua consumida en el dia, debe ser mayor o igual a 0
+    aguaRecomendada (float): cantidad de agua que se recomienda al usuario consumir (calculada en base a su altura y peso)
+    vegetales (boolean): comio o no vegetales hoy
+    azucar (boolean): evito exceso de azucares hoy
+    proteina (boolean): consumio proteina hoy
+    fruta (boolean): consumio fruta hoy
+    fecha (date): fecha en la que ingreso los habitos alimenticios
+    UNIQUE(idUsuario, fecha)
+
+Relaciones
+Usuario-Metrica (1:N): un usuario puede registrar muchas metricas durante el tiempo pero un metrica le pertenece a un solo usuario
+Usuario-Sueño (1:N): un usuario tiene muchas entradas de historial de sueño pero cada registro de sueño pertenece a un solo usuario 
+Usuario-Actividad (1:N): un usuario agenda muchas actividades en su calendario mensual  pero cada actividad pertenece a un solo usuario
+Usuario-Comida (1:N): un usuario ingresa muchas comidas durante el dia pero cada comida queda registrada bajo un usuario
+Usuario-HabitosyAgua (1:1 dinamica): un usuario tiene solo una tabla de habitos y agua por dia especifico 
+
+Endpoints y respuestas JSON
+1.Autenticacion
+Ruta: POST /auth/register
+Proposito: crear un nuevo usuario
+JSON que envia frontend (Request)
+{
+   “nombre”: “Pedro picapiedra”,
+   “correo”: “pedro.pica@gmail.com,
+   “contraseña”: “yabadabadu”
+}
+JSON que responde la API (Response-201 Created)
+{
+   “mensaje”: “Usuario registrado exitosamente”,
+   “idUsuario”: “USR-77”
+}
+Ruta: POST /auth/login
+Proposito: Iniciar sesion validando credenciales
+JSON de respuesta (200 OK)
+{
+   “token”: "eyJhbGciOiJIUzI1NiIsIn...",
+   “idUsuario”: “USR-77”,
+   “nombre”: “Pedro picapiedra”
+}
+2.Metricas
+Ruta: POST /metrics
+Proposito: registrar estado fisico actual
+JSON que envia frontend (Request)
+{
+   “idUsuario”: “USR-77”,
+   “peso”: 75.5,
+   “altura”: 178.0,
+   “cintura”: 82.0,
+   “grasa”: 14.5
+}
+JSON que responde la API (Responde-201 Created)
+{
+   “id”: 1,
+   “mensaje”: “Metrica guardada con exito”,
+   “imccalculado”: 23.8,
+   “estadoSalud”: “normal”
+}
+
+
+
+
+3.Actividades
+Ruta: POST /activities
+Proposito: agendar una tarea en el calendario
+JSON que envia frontend (Request)
+{
+   “idUsuario”: “USR-77”,
+   “descripcion”: “Dar de comer a dino”,
+   “hora”: “13.00”,
+   “fecha”: “29-05-2026” 
+}
+JSON que responde la API (Responde-201 Created)
+{
+   “id”: 1,
+   “mensaje”: “Metrica guardada con exito”,
+   “imccalculado”: 23.8,
+   “estadoSalud”: “normal”
+}
+Ruta: GET /activities?idUsuario=USR-77&fecha=29-05-2026
+Proposito: ver actividades de un dia especifico
+JSON que responde la API (200 OK)
+{
+   { "id": 1, "descripcion": "Dar de comer a dino", "hora": "13:00" }, 
+   { "id": 2, "descripcion": "Estudiar NestJS", "hora": "21:00" } 
+}
+
+4.Nutricion
+Ruta: POST /nutrition/meals
+Proposito: agregar un alimento a un bloque
+JSON que envia frontend (Request)
+{
+   “idUsuario”: “USR-77”,
+   “nombre”: “Pan tostado con palta”,
+   “categoria”: “Desayuno”,
+   “fecha”: “29-05-2026” 
+}
+JSON que responde la API (Responde-201 Created)
+{
+   “id”: 1,
+   “mensaje”: “Comida guardada con exito”
+}
+Ruta: GET /nutrition/dashboard?idUsuario=USR-77&fecha=29-05-2026
+Proposito: traer todo lo relacionado a alimentacion
+JSON que responde la API (200 0K)
+{
+   "comidas": { 
+   "desayuno": ["Pan tostado con palta", "Café con leche"], 
+   "almuerzo": ["Pollo a la plancha", "Arroz integral"], 
+   "cena": [],
+   "snacks": [] 
+}, 
+"habitosYAgua": { "aguaConsumida": 1.2, "aguaRecomendada": 2.5, "vegetales": true, "azucar": false, "proteina": true, "fruta": true } 
+}
+Ruta: PATCH /nutrition/daily-habits 
+Proposito: Actualizar ingesta de agua o cambiar estado de check de habitos saludables
+JSON que envia frontend (Request)
+{
+   "idUsuario": "USR-77", 
+   "fecha": "2026-05-29", 
+   "aguaConsumida": 1.5, 
+   "vegetales": true, 
+   "azucar": false, 
+   "proteina": true, 
+   "fruta": true 
+}
+JSON que responde la API (Responde-201 Created)
+{
+   "mensaje": "Hábitos diarios actualizados correctamente",
+    "datosActualizados": { 
+         "aguaConsumida": 1.5, 
+         "aguaRecomendada": 2.5,
+         "vegetales": true, 
+         "azucar": false, 
+         "proteina": true, 
+         "fruta": true 
+   } 
+}
