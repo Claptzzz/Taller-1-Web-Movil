@@ -21,10 +21,10 @@ if (localStorage.getItem('sesionIniciada') === 'true' && localStorage.getItem('t
 
     usuario = {
         nombre: localStorage.getItem('usuarioNombre') || 'Usuario',
-        peso: localStorage.getItem('peso') || '',
-        altura: localStorage.getItem('altura') || '',
-        grasa: localStorage.getItem('grasa') || '',
-        cintura: localStorage.getItem('cintura') || ''
+        peso: '',
+        altura: '',
+        grasa: '',
+        cintura: ''
     };
 
     cargarDatosUsuario();
@@ -65,20 +65,54 @@ function cargarDatosUsuario() {
         titulo.textContent = `Bienvenido, ${usuario.nombre}`;
     }
 
-    const peso = document.getElementById('in-peso');
-    const altura = document.getElementById('in-altura');
-    const grasa = document.getElementById('in-grasa');
-    const cintura = document.getElementById('in-cintura');
+    const token = localStorage.getItem('token');
+    if(token) {
+        fetch('http://localhost:3000/metrics', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        .then(res => res.text())
+        .then(text => {
+            if(text) {
+                const data = JSON.parse(text);
+                document.getElementById('in-peso').value = data.peso || '';
+                document.getElementById('in-altura').value = data.altura || '';
+                document.getElementById('in-grasa').value = data.grasa || '';
+                document.getElementById('in-cintura').value = data.cintura || '';
+                
+                calcularDatosIdeales();
+            }
+        }).catch(err => console.log('Sin metricas previas o error'));
+    }
+}
 
-    if (peso) peso.value = usuario.peso;
-    if (altura) altura.value = usuario.altura;
-    if (grasa) grasa.value = usuario.grasa;
-    if (cintura) cintura.value = usuario.cintura;
-
-    if (usuario.peso > 0 && usuario.altura > 100) {
-        const m = usuario.altura / 100;
+function calcularDatosIdeales() {
+    const p = parseFloat(document.getElementById('in-peso').value) || 0;
+    let a = parseFloat(document.getElementById('in-altura').value) || 0;
+    const c = parseFloat(document.getElementById('in-cintura').value) || 0;
+    
+    // Si el usuario pone altura en metros (ej. 1.78) en vez de cm
+    if (a > 0 && a < 3) {
+        a = a * 100;
+    }
+    
+    if(p > 0 && a > 0) {
+        const m = a / 100;
+        // Calculo ideal (basado en altura)
         document.getElementById('res-peso').innerText = (22 * (m * m)).toFixed(1) + ' kg';
-        document.getElementById('res-cintura').innerText = Math.round(usuario.altura * 0.47) + ' cm';
+        document.getElementById('res-cintura').innerText = Math.round(a * 0.47) + ' cm';
+        
+        if (c > 0) {
+            // Calculo RFM (Relative Fat Mass). La fórmula oficial es altura / cintura
+            const rfmReal = 64 - (20 * (a / c));
+            document.getElementById('res-imc').innerText = rfmReal.toFixed(1) + '%';
+            
+            let estado = 'NORMAL';
+            if (rfmReal < 15) estado = 'BAJO PESO';
+            else if (rfmReal >= 25 && rfmReal < 35) estado = 'SOBREPESO';
+            else if (rfmReal >= 35) estado = 'OBESIDAD';
+            
+            document.getElementById('res-estado').innerText = estado;
+        }
     }
 }
 
@@ -117,6 +151,9 @@ async function submit_pop() {
 
             auth_login.classList.add('hidden');
             tabs_content.classList.remove('hidden');
+
+            // Limpiamos el #login de la URL para que no vuelva a saltar si se recarga la página
+            window.history.replaceState(null, null, window.location.pathname);
 
             cargarDatosUsuario();
             close_pop();
@@ -224,14 +261,56 @@ healthIds.forEach(id => {
     const input = document.getElementById(`in-${id}`);
     if(input) {
         input.addEventListener('input', () => {
-            localStorage.setItem(id, input.value);
-            const p = parseFloat(document.getElementById('in-peso').value) || 0;
-            const a = parseFloat(document.getElementById('in-altura').value) || 0;
-            if(p > 0 && a > 100) {
-                const m = a / 100;
-                document.getElementById('res-peso').innerText = (22 * (m * m)).toFixed(1) + ' kg';
-                document.getElementById('res-cintura').innerText = Math.round(a * 0.47) + ' cm';
-            }
+            calcularDatosIdeales();
         });
     }
 });
+
+const btnSaveMetrics = document.getElementById('btn-save-metrics');
+if(btnSaveMetrics) {
+    btnSaveMetrics.addEventListener('click', async (e) => {
+        if(e) e.preventDefault();
+        
+        const peso = document.getElementById('in-peso').value;
+        const altura = document.getElementById('in-altura').value;
+        const cintura = document.getElementById('in-cintura').value;
+        const grasa = document.getElementById('in-grasa').value;
+        const token = localStorage.getItem('token');
+
+        if(!peso || !altura || !cintura) {
+            alert('Por favor, llena los datos de peso, altura y cintura');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/metrics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    peso: peso,
+                    altura: altura,
+                    cintura: cintura,
+                    grasa: grasa
+                })
+            });
+
+            if(response.ok) {
+                const data = await response.json();
+                alert(`✅ ${data.mensaje}\nTu RFM estimado es ${data.rfmCalculado}% (${data.estadoSalud.toUpperCase()})`);
+                
+                // Actualizar info desde backend
+                document.getElementById('res-imc').innerText = data.rfmCalculado + '%';
+                document.getElementById('res-estado').innerText = data.estadoSalud.toUpperCase();
+                calcularDatosIdeales();
+            } else {
+                const err = await response.json();
+                alert(`Error: ${err.message || 'Datos invalidos'}`);
+            }
+        } catch (error) {
+            alert('Error al conectar con el servidor.');
+        }
+    });
+}
