@@ -14,22 +14,25 @@ const tabs_content = document.getElementById('content_tabs');
 let usuario = null;
 let modoActual = 'login';
 
-fetch('../data/usuario.json')
-    .then(res => res.json())
-    .then(data => {
-        usuario = data;
-        if (localStorage.getItem('sesionIniciada') === 'true') {
-            auth_login.classList.add('hidden');
-            tabs_content.classList.remove('hidden');
+// Al iniciar verificamos si hay sesión
+if (localStorage.getItem('sesionIniciada') === 'true' && localStorage.getItem('token')) {
+    auth_login.classList.add('hidden');
+    tabs_content.classList.remove('hidden');
 
-            if (localStorage.getItem('tipoSesion') === 'login') {
-                cargarDatosUsuario();
-            } else {
-                const titulo = document.querySelector('#content_tabs h2');
-                if (titulo) titulo.textContent = 'Bienvenido, nuevo usuario';
-            }
-        }
-    });
+    usuario = {
+        nombre: localStorage.getItem('usuarioNombre') || 'Usuario',
+        peso: localStorage.getItem('peso') || '',
+        altura: localStorage.getItem('altura') || '',
+        grasa: localStorage.getItem('grasa') || '',
+        cintura: localStorage.getItem('cintura') || ''
+    };
+
+    cargarDatosUsuario();
+} else {
+    usuario = {
+        nombre: '', peso: '', altura: '', grasa: '', cintura: ''
+    };
+}
 
 //funcion para abrir el pop de login
 function open_pop(type){
@@ -79,38 +82,80 @@ function cargarDatosUsuario() {
     }
 }
 
-function submit_pop() {
-    if (!usuario) {
-        alert('Cargando datos, intenta de nuevo en un momento');
-        return;
-    }
+async function submit_pop() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
     if (modoActual === 'login') {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        try {
+            const response = await fetch('http://localhost:3000/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo: email, contraseña: password })
+            });
 
-        if (email !== usuario.email || password !== usuario.password) {
-            alert('Credenciales incorrectas');
+            if (!response.ok) {
+                alert('Credenciales incorrectas');
+                return;
+            }
+
+            const data = await response.json();
+            
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('usuarioNombre', data.nombre);
+            localStorage.setItem('usuarioId', data.idUsuario);
+            localStorage.setItem('sesionIniciada', 'true');
+            localStorage.setItem('tipoSesion', 'login');
+
+            usuario = {
+                nombre: data.nombre,
+                peso: localStorage.getItem('peso') || '',
+                altura: localStorage.getItem('altura') || '',
+                grasa: localStorage.getItem('grasa') || '',
+                cintura: localStorage.getItem('cintura') || ''
+            };
+
+            auth_login.classList.add('hidden');
+            tabs_content.classList.remove('hidden');
+
+            cargarDatosUsuario();
+            close_pop();
+            
+            if (typeof iniciarSesion === 'function') iniciarSesion();
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('No se pudo conectar al servidor');
+        }
+    } else {
+        const password_rep = document.getElementById('password_rep').value;
+        if(password !== password_rep) {
+            alert('Las contraseñas no coinciden');
             return;
         }
+
+        const nombre = email.split('@')[0];
+
+        try {
+            const response = await fetch('http://localhost:3000/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo: email, contraseña: password, nombre: nombre })
+            });
+
+            if (!response.ok) {
+                const errData = await response.json();
+                alert('Error al registrar: ' + (errData.message || 'Error desconocido'));
+                return;
+            }
+            
+            alert('Registro exitoso. Ahora puedes iniciar sesión.');
+            open_pop('login');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('No se pudo conectar al servidor');
+        }
     }
-
-    auth_login.classList.add('hidden');
-    tabs_content.classList.remove('hidden');
-
-    localStorage.setItem('tipoSesion', modoActual);
-
-    if (modoActual === 'login') {
-        cargarDatosUsuario();
-    } else {
-        const titulo = document.querySelector('#content_tabs h2');
-        if (titulo) titulo.textContent = 'Bienvenido, nuevo usuario';
-    }
-
-    if (typeof iniciarSesion === 'function') {
-        iniciarSesion();
-    }
-    close_pop();
 }
 
 loginBtn.addEventListener('click', () => {open_pop('login')});
@@ -127,6 +172,11 @@ submitModalBtn.addEventListener('click', () => {submit_pop()});
 
 function logout() {
     localStorage.removeItem('tipoSesion');
+    localStorage.removeItem('sesionIniciada');
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuarioNombre');
+    localStorage.removeItem('usuarioId');
+    
     auth_login.classList.remove('hidden');
     tabs_content.classList.add('hidden');
 
@@ -144,6 +194,8 @@ function logout() {
 
     document.getElementById('res-peso').innerText = '-- kg';
     document.getElementById('res-cintura').innerText = '-- cm';
+
+    usuario = null;
 
     if (typeof cerrarSesion === 'function') {
         cerrarSesion();
@@ -172,6 +224,7 @@ healthIds.forEach(id => {
     const input = document.getElementById(`in-${id}`);
     if(input) {
         input.addEventListener('input', () => {
+            localStorage.setItem(id, input.value);
             const p = parseFloat(document.getElementById('in-peso').value) || 0;
             const a = parseFloat(document.getElementById('in-altura').value) || 0;
             if(p > 0 && a > 100) {

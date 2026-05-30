@@ -1,10 +1,14 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService
+  ) {}
 
   async register(nombre: string, correo: string, contrasena: string) {
     // Validar si el usuario ya existe
@@ -45,9 +49,11 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales incorrectas');
     }
 
-    // Aquí normalmente generarías un JWT token real. Por ahora devolvemos la estructura acordada en BD.txt
+    // Generamos el JWT token real
+    const payload = { sub: usuario.id, correo: usuario.correo, nombre: usuario.nombre };
+    
     return {
-      token: 'eyJhbGciOiJIUzI1NiIsIn... (Simulado por ahora)', 
+      token: await this.jwtService.signAsync(payload), 
       idUsuario: usuario.id,
       nombre: usuario.nombre,
     };

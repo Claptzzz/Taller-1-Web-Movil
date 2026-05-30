@@ -1,5 +1,6 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -15,5 +16,13 @@ export class AuthController {
   @Post('login')
   login(@Body() body: any) {
     return this.authService.login(body.correo, body.contraseña);
+  }
+
+  // Endpoint de prueba para validar que el Guard funciona
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req: any) {
+    // req.user viene del JwtStrategy.validate()
+    return req.user;
   }
 }
