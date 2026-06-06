@@ -27,7 +27,7 @@ function agregarComidaDOM(mealType, descripcion) {
     foodsContainer.appendChild(foodItem);
 }
 
-function addFood() {
+async function addFood() {
     const input = document.getElementById('foodDescription');
     const description = input.value.trim();
 
@@ -38,12 +38,39 @@ function addFood() {
 
     if (!currentMeal) return;
 
-    agregarComidaDOM(currentMeal, description);
-    closeModal();
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+        const response = await fetch('http://localhost:3000/nutrition/meals', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                nombre: description,
+                categoria: currentMeal,
+                fecha: getHoy()
+            })
+        });
+
+        if (response.ok) {
+            agregarComidaDOM(currentMeal, description);
+            closeModal();
+        } else {
+            alert('Error al guardar la comida en el servidor');
+        }
+    } catch(e) {
+        console.error('Error:', e);
+        alert('No se pudo conectar al servidor');
+    }
 }
 
 function getHoy() {
-    return new Date().toISOString().split('T')[0];
+    const today = new Date();
+    const offset = today.getTimezoneOffset() * 60000;
+    return (new Date(today.getTime() - offset)).toISOString().split('T')[0];
 }
 
 async function guardarHabitos() {
@@ -99,16 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const token = localStorage.getItem('token');
     if (localStorage.getItem('sesionIniciada') === 'true' && token) {
         
-        // 1. Cargar las comidas desde el JSON temporalmente (hasta que implementemos comidas backend)
-        fetch('../data/alimentacion.json')
-            .then(res => res.json())
-            .then(data => {
-                for (const tipo in data.comidas) {
-                    data.comidas[tipo].forEach(c => agregarComidaDOM(tipo, c));
-                }
-            });
-
-        // 2. Conectar Hábitos y Agua al Backend Real
+        // Conectar Hábitos, Agua y Comidas al Backend Real
         const fechaHoy = getHoy();
         fetch(`http://localhost:3000/nutrition/dashboard?fecha=${fechaHoy}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -147,11 +165,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
+            // Pintar comidas en pantalla si el backend nos envió alguna
+            if (data && data.comidas) {
+                for (const tipo in data.comidas) {
+                    data.comidas[tipo].forEach(c => agregarComidaDOM(tipo, c));
+                }
+            }
+
             // Detectar cuando el usuario cambia algo y guardar al instante
             if (inputs[1]) inputs[1].addEventListener('change', guardarHabitos);
             checkboxes.forEach(cb => cb.addEventListener('change', guardarHabitos));
         })
-        .catch(err => console.error("Error cargando hábitos de agua", err));
+        .catch(err => console.error("Error cargando dashboard nutricional", err));
     }
 });
 

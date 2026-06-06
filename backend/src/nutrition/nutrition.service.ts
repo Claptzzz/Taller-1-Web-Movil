@@ -97,9 +97,45 @@ export class NutritionService {
       });
     }
 
-    // Traemos de momento solo habitos, despues implementaremos las comidas
+    // Obtener comidas y agruparlas por categoria
+    const comidasList = await this.prisma.comida.findMany({
+      where: { idUsuario: userId, fecha: dateObj }
+    });
+
+    const comidas = {
+      desayuno: comidasList.filter(c => c.categoria === 'desayuno').map(c => c.nombre),
+      almuerzo: comidasList.filter(c => c.categoria === 'almuerzo').map(c => c.nombre),
+      cena: comidasList.filter(c => c.categoria === 'cena').map(c => c.nombre),
+      snacks: comidasList.filter(c => c.categoria === 'snacks').map(c => c.nombre),
+    };
+
     return {
+      comidas,
       habitosYAgua: habitos || null
+    };
+  }
+
+  async addMeal(userId: string, data: any) {
+    const { nombre, categoria, fecha } = data;
+    if (!nombre || !categoria || !fecha) {
+      throw new BadRequestException('Faltan datos de la comida');
+    }
+
+    const dateObj = new Date(fecha);
+    dateObj.setUTCHours(0,0,0,0);
+
+    const comida = await this.prisma.comida.create({
+      data: {
+        idUsuario: userId,
+        nombre,
+        categoria,
+        fecha: dateObj
+      }
+    });
+
+    return {
+      id: comida.id,
+      mensaje: 'Comida guardada con exito'
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Patch, Get, Body, Query, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Patch, Get, Body, Query, UseGuards, Request } from '@nestjs/common';
 import { NutritionService } from './nutrition.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -11,6 +11,12 @@ export class NutritionController {
   async updateDailyHabits(@Request() req: any, @Body() body: any) {
     const userId = req.user.userId;
     return this.nutritionService.updateDailyHabits(userId, body);
+  }
+
+  @Post('meals')
+  async addMeal(@Request() req: any, @Body() body: any) {
+    const userId = req.user.userId;
+    return this.nutritionService.addMeal(userId, body);
   }
 
   @Get('dashboard')
