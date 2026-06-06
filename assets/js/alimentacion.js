@@ -1,5 +1,15 @@
 let currentMeal = null;
 
+function checkAuth(response) {
+    if (response.status === 401) {
+        alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+        localStorage.clear();
+        window.location.href = '../index.html#login';
+        return false;
+    }
+    return true;
+}
+
 function openModal(mealType) {
     currentMeal = mealType;
     const modal = document.getElementById('mealModal');
@@ -16,15 +26,49 @@ function closeModal() {
     currentMeal = null;
 }
 
-function agregarComidaDOM(mealType, descripcion) {
+function agregarComidaDOM(mealType, comida) {
     const mealArticle = document.querySelector(`article[data-meal="${mealType}"]`);
     if (!mealArticle) return;
 
+    const id = typeof comida === 'object' ? comida.id : Date.now();
+    const descripcion = typeof comida === 'object' ? comida.nombre : comida;
+
     const foodsContainer = mealArticle.querySelector('.foods');
     const foodItem = document.createElement('li');
-    foodItem.className = 'bg-OatmilkFoam text-DeepSlate p-3 rounded-lg font-medium text-sm text-center break-words';
-    foodItem.textContent = descripcion;
+    foodItem.className = 'bg-OatmilkFoam text-DeepSlate p-3 rounded-lg font-medium text-sm flex justify-between items-center break-words';
+    foodItem.id = `meal-${id}`;
+    
+    foodItem.innerHTML = `
+        <span class="flex-1 text-center">${descripcion}</span>
+        <button class="text-red-500 hover:text-red-700 font-bold ml-2 text-lg cursor-pointer transition-colors" onclick="borrarComida(${id}, this)">×</button>
+    `;
+
     foodsContainer.appendChild(foodItem);
+}
+
+async function borrarComida(id, btnElement) {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    if (!confirm('¿Seguro que deseas eliminar esta comida?')) return;
+
+    try {
+        const response = await fetch(`http://localhost:3000/nutrition/meals/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!checkAuth(response)) return;
+
+        if (response.ok) {
+            const li = btnElement.closest('li');
+            if (li) li.remove();
+        } else {
+            alert('Error al borrar la comida');
+        }
+    } catch(e) {
+        alert('Error de conexión');
+    }
 }
 
 async function addFood() {
@@ -55,14 +99,16 @@ async function addFood() {
             })
         });
 
+        if (!checkAuth(response)) return;
+
         if (response.ok) {
-            agregarComidaDOM(currentMeal, description);
+            const data = await response.json();
+            agregarComidaDOM(currentMeal, { id: data.id, nombre: description });
             closeModal();
         } else {
             alert('Error al guardar la comida en el servidor');
         }
     } catch(e) {
-        console.error('Error:', e);
         alert('No se pudo conectar al servidor');
     }
 }
@@ -103,6 +149,8 @@ async function guardarHabitos() {
             body: JSON.stringify(payload)
         });
 
+        if (!checkAuth(response)) return;
+
         if (response.ok) {
             const result = await response.json();
             if (result.datosActualizados) {
@@ -131,7 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`http://localhost:3000/nutrition/dashboard?fecha=${fechaHoy}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!checkAuth(res)) throw new Error('Unauthorized');
+            return res.json();
+        })
         .then(data => {
             const inputs = document.querySelectorAll('aside input[type="text"]');
             const checkboxes = document.querySelectorAll('aside input[type="checkbox"]');

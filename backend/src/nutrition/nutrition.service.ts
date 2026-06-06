@@ -103,10 +103,10 @@ export class NutritionService {
     });
 
     const comidas = {
-      desayuno: comidasList.filter(c => c.categoria === 'desayuno').map(c => c.nombre),
-      almuerzo: comidasList.filter(c => c.categoria === 'almuerzo').map(c => c.nombre),
-      cena: comidasList.filter(c => c.categoria === 'cena').map(c => c.nombre),
-      snacks: comidasList.filter(c => c.categoria === 'snacks').map(c => c.nombre),
+      desayuno: comidasList.filter(c => c.categoria === 'desayuno').map(c => ({ id: c.id, nombre: c.nombre })),
+      almuerzo: comidasList.filter(c => c.categoria === 'almuerzo').map(c => ({ id: c.id, nombre: c.nombre })),
+      cena: comidasList.filter(c => c.categoria === 'cena').map(c => ({ id: c.id, nombre: c.nombre })),
+      snacks: comidasList.filter(c => c.categoria === 'snacks').map(c => ({ id: c.id, nombre: c.nombre })),
     };
 
     return {
@@ -137,5 +137,14 @@ export class NutritionService {
       id: comida.id,
       mensaje: 'Comida guardada con exito'
     };
+  }
+
+  async deleteMeal(userId: string, mealId: number) {
+    const comida = await this.prisma.comida.findUnique({ where: { id: mealId } });
+    if (!comida) throw new BadRequestException('Comida no encontrada');
+    if (comida.idUsuario !== userId) throw new BadRequestException('No tienes permiso para borrar esta comida');
+
+    await this.prisma.comida.delete({ where: { id: mealId } });
+    return { mensaje: 'Comida eliminada' };
   }
 }
