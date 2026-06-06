@@ -1,0 +1,21 @@
+import { Controller, Patch, Get, Body, Query, UseGuards, Request } from '@nestjs/common';
+import { NutritionService } from './nutrition.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+
+@UseGuards(JwtAuthGuard)
+@Controller('nutrition')
+export class NutritionController {
+  constructor(private readonly nutritionService: NutritionService) {}
+
+  @Patch('daily-habits')
+  async updateDailyHabits(@Request() req: any, @Body() body: any) {
+    const userId = req.user.userId;
+    return this.nutritionService.updateDailyHabits(userId, body);
+  }
+
+  @Get('dashboard')
+  async getDashboard(@Request() req: any, @Query('fecha') fecha: string) {
+    const userId = req.user.userId;
+    return this.nutritionService.getDashboard(userId, fecha);
+  }
+}
