@@ -1,19 +1,36 @@
 services:
+  db:
+    image: postgres:16
+    container_name: taller1-db
+    environment:
+      POSTGRES_USER: salud
+      POSTGRES_PASSWORD: salud
+      POSTGRES_DB: salud
+    volumes:
+      - backend-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U salud -d salud"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
     image: taller1-backend:latest
     container_name: taller1-backend
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: "file:/app/data/prod.db"
+      DATABASE_URL: "postgresql://salud:salud@db:5432/salud"
       JWT_SECRET: "change-me-in-production"
       PORT: "3000"
-    volumes:
-      - backend-data:/app/data
     restart: unless-stopped
 
 volumes:
-  backend-data:
+  backend-db-data:
