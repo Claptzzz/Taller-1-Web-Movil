@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: salud-api
+    name: SleepWell
     runtime: docker
     rootDir: backend
     dockerfilePath: ./Dockerfile
