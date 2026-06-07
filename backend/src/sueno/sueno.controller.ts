@@ -12,26 +12,30 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';
-import { ActividadesService } from './actividades.service';
+import { SuenoService } from './sueno.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-const ACTIVIDAD_BODY = {
+const SUENO_BODY = {
   schema: {
     type: 'object' as const,
     properties: {
-      descripcion: { type: 'string', example: 'Correr 5km' },
-      hora: { type: 'string', example: '07:30' },
-      fecha: { type: 'string', format: 'date', example: '2026-04-27' },
+      horasDormidas: { type: 'number', example: 7.5 },
+      calidadSueno: {
+        type: 'string',
+        enum: ['ALTA', 'MEDIA', 'BAJA'],
+        example: 'MEDIA',
+      },
+      fechaSueno: { type: 'string', format: 'date', example: '2026-04-27' },
     },
   },
 };
 
-@ApiTags('Actividades')
+@ApiTags('Sueno')
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
-@Controller('actividades')
-export class ActividadesController {
-  constructor(private readonly actividadesService: ActividadesService) {}
+@Controller('sueno')
+export class SuenoController {
+  constructor(private readonly suenoService: SuenoService) {}
 
   private parseId(id: string): number {
     const parsed = parseInt(id, 10);
@@ -41,51 +45,54 @@ export class ActividadesController {
     return parsed;
   }
 
-  @ApiOperation({ summary: 'Crear una nueva actividad' })
-  @ApiBody(ACTIVIDAD_BODY)
+  @ApiOperation({
+    summary:
+      'Crear un registro de sueño (acepta horasDormidas directo o el par horaInicio/horaFin en formato HH:MM)',
+  })
+  @ApiBody(SUENO_BODY)
   @Post()
   async create(@Request() req: any, @Body() body: any) {
     const userId = req.user.userId;
-    return this.actividadesService.create(userId, body);
+    return this.suenoService.create(userId, body);
   }
 
-  @ApiOperation({ summary: 'Listar actividades del usuario (opcionalmente filtradas por fecha)' })
+  @ApiOperation({ summary: 'Listar registros de sueño (opcionalmente filtrados por fecha)' })
   @ApiQuery({ name: 'fecha', required: false, example: '2026-04-27' })
   @Get()
   async findAll(@Request() req: any, @Query('fecha') fecha?: string) {
     const userId = req.user.userId;
-    return this.actividadesService.findAll(userId, fecha);
+    return this.suenoService.findAll(userId, fecha);
   }
 
-  @ApiOperation({ summary: 'Actividades agrupadas por fecha para vista de calendario' })
-  @Get('calendario')
-  async getCalendario(@Request() req: any) {
+  @ApiOperation({ summary: 'Resumen de horas dormidas de la semana actual (lunes a domingo)' })
+  @Get('semana')
+  async getSemana(@Request() req: any) {
     const userId = req.user.userId;
-    return this.actividadesService.getCalendario(userId);
+    return this.suenoService.getSemana(userId);
   }
 
-  @ApiOperation({ summary: 'Obtener una actividad por id' })
+  @ApiOperation({ summary: 'Obtener un registro de sueño por id' })
   @ApiParam({ name: 'id', type: Number })
   @Get(':id')
   async findOne(@Request() req: any, @Param('id') id: string) {
     const userId = req.user.userId;
-    return this.actividadesService.findOne(userId, this.parseId(id));
+    return this.suenoService.findOne(userId, this.parseId(id));
   }
 
-  @ApiOperation({ summary: 'Editar parcialmente una actividad' })
+  @ApiOperation({ summary: 'Editar parcialmente un registro de sueño' })
   @ApiParam({ name: 'id', type: Number })
-  @ApiBody(ACTIVIDAD_BODY)
+  @ApiBody(SUENO_BODY)
   @Patch(':id')
   async update(@Request() req: any, @Param('id') id: string, @Body() body: any) {
     const userId = req.user.userId;
-    return this.actividadesService.update(userId, this.parseId(id), body);
+    return this.suenoService.update(userId, this.parseId(id), body);
   }
 
-  @ApiOperation({ summary: 'Eliminar una actividad' })
+  @ApiOperation({ summary: 'Eliminar un registro de sueño' })
   @ApiParam({ name: 'id', type: Number })
   @Delete(':id')
   async remove(@Request() req: any, @Param('id') id: string) {
     const userId = req.user.userId;
-    return this.actividadesService.remove(userId, this.parseId(id));
+    return this.suenoService.remove(userId, this.parseId(id));
   }
 }
