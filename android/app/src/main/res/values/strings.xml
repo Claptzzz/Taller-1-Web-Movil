@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Sleepwell</string>
+    <string name="title_activity_main">Sleepwell</string>
+    <string name="package_name">com.habito.sleepwell</string>
+    <string name="custom_url_scheme">com.habito.sleepwell</string>
+</resources>
