@@ -120,8 +120,8 @@ function getHoy() {
 }
 
 async function guardarHabitos() {
-    const inputs = document.querySelectorAll('aside input[type="text"]');
-    const checkboxes = document.querySelectorAll('aside input[type="checkbox"]');
+    const inputs = document.querySelectorAll('main input[type="text"]');
+    const checkboxes = document.querySelectorAll('main input[type="checkbox"]');
     
     // Limpiamos la "L" para mandar solo el numero
     let aguaConsumida = parseFloat(inputs[1].value.replace(/[a-zA-Z]/g, '').trim());
@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return res.json();
         })
         .then(data => {
-            const inputs = document.querySelectorAll('aside input[type="text"]');
-            const checkboxes = document.querySelectorAll('aside input[type="checkbox"]');
+            const inputs = document.querySelectorAll('main input[type="text"]');
+            const checkboxes = document.querySelectorAll('main input[type="checkbox"]');
             
             // Hacer el input recomendado de solo lectura
             if (inputs[0]) inputs[0].readOnly = true;
