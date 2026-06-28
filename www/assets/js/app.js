@@ -67,7 +67,7 @@ function cargarDatosUsuario() {
 
     const token = localStorage.getItem('token');
     if(token) {
-        fetch('http://localhost:3000/metrics', {
+        fetch('https://salud-api-rzk9.onrender.com/metrics', {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(res => res.text())
@@ -122,7 +122,7 @@ async function submit_pop() {
 
     if (modoActual === 'login') {
         try {
-            const response = await fetch('http://localhost:3000/auth/login', {
+            const response = await fetch('https://salud-api-rzk9.onrender.com/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo: email, contraseña: password })
@@ -174,7 +174,7 @@ async function submit_pop() {
         const nombre = email.split('@')[0];
 
         try {
-            const response = await fetch('http://localhost:3000/auth/register', {
+            const response = await fetch('https://salud-api-rzk9.onrender.com/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo: email, contraseña: password, nombre: nombre })
@@ -283,7 +283,7 @@ if(btnSaveMetrics) {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/metrics', {
+            const response = await fetch('https://salud-api-rzk9.onrender.com/metrics', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

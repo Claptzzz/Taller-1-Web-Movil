@@ -5,17 +5,39 @@
 
     function obtenerEnlacesInvitado() {
         return `
-            <a href="${rutaInicio}#hero" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">INICIO</a>
-            <a href="${rutaInicio}#how_to_use" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">MÉTODO</a>
-            <a href="${rutaInicio}#about" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">NOSOTROS</a>
+            <a href="${rutaInicio}#hero" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#logo-icon" /></svg>
+                <span class="text-[10px] font-bold">INICIO</span>
+            </a>
+            <a href="${rutaInicio}#how_to_use" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#documento-icon" /></svg>
+                <span class="text-[10px] font-bold">MÉTODO</span>
+            </a>
+            <a href="${rutaInicio}#about" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#spark-icon" /></svg>
+                <span class="text-[10px] font-bold">NOSOTROS</span>
+            </a>
         `;
     }
 
     function obtenerEnlacesUsuario() {
         return `
-            <a href="${prefijoPages}actividades.html" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">ACTIVIDADES</a>
-            <a href="${prefijoPages}alimentacion.html" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">ALIMENTACIÓN</a>
-            <a href="${prefijoPages}sueño.html" class="hover:bg-white/10 px-4 py-2 rounded-xl transition-all">SUEÑO</a>
+            <a href="${prefijoPages}perfil.html" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#user-icon" /></svg>
+                <span class="text-[10px] font-bold">PERFIL</span>
+            </a>
+            <a href="${prefijoPages}actividades.html" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#spark-icon" /></svg>
+                <span class="text-[10px] font-bold">ACTIVIDAD</span>
+            </a>
+            <a href="${prefijoPages}alimentacion.html" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#documento-icon" /></svg>
+                <span class="text-[10px] font-bold">COMIDA</span>
+            </a>
+            <a href="${prefijoPages}sueño.html" class="flex flex-col items-center p-2 text-OatmilkFoam/60 hover:text-sky-300 transition-colors">
+                <svg class="h-6 w-6 mb-1"><use xlink:href="${rutaInicio.replace('index.html','')}assets/img/sprites.svg#graph-icon" /></svg>
+                <span class="text-[10px] font-bold">SUEÑO</span>
+            </a>
         `;
     }
 

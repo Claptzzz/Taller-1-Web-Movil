@@ -53,7 +53,7 @@ async function borrarComida(id, btnElement) {
     if (!confirm('¿Seguro que deseas eliminar esta comida?')) return;
 
     try {
-        const response = await fetch(`http://localhost:3000/nutrition/meals/${id}`, {
+        const response = await fetch(`https://salud-api-rzk9.onrender.com/nutrition/meals/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -86,7 +86,7 @@ async function addFood() {
     if (!token) return;
 
     try {
-        const response = await fetch('http://localhost:3000/nutrition/meals', {
+        const response = await fetch('https://salud-api-rzk9.onrender.com/nutrition/meals', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ async function guardarHabitos() {
     if (!token) return;
 
     try {
-        const response = await fetch('http://localhost:3000/nutrition/daily-habits', {
+        const response = await fetch('https://salud-api-rzk9.onrender.com/nutrition/daily-habits', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Conectar Hábitos, Agua y Comidas al Backend Real
         const fechaHoy = getHoy();
-        fetch(`http://localhost:3000/nutrition/dashboard?fecha=${fechaHoy}`, {
+        fetch(`https://salud-api-rzk9.onrender.com/nutrition/dashboard?fecha=${fechaHoy}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(res => {
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 checkboxes[3].checked = habitos.fruta || false;
             } else {
                 // Si hoy no hay registros, mandamos un PATCH vacío para que el backend calcule y cree el día
-                fetch(`http://localhost:3000/nutrition/daily-habits`, {
+                fetch(`https://salud-api-rzk9.onrender.com/nutrition/daily-habits`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({ fecha: fechaHoy })
