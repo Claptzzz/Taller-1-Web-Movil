@@ -1,24 +1,32 @@
 //Script para manejar calendario y actividades diarias
 const today = new Date();
-const currentYear = today.getFullYear();
-const currentMonth = today.getMonth();
-const currentDay = today.getDate();
+let currentYear = today.getFullYear();
+let currentMonth = today.getMonth();
+let currentDay = today.getDate();
 
-let actividades = {};
+let actividades = {}; // Mapeo: 'YYYY-MM-DD' -> [{id, nombre, hora}]
+const token = localStorage.getItem('token');
+const API_URL = 'https://salud-api-rzk9.onrender.com';
 
 let diaSeleccionado = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${currentDay.toString().padStart(2, '0')}`;
 
 const calendarioHeader = document.querySelector('h2');
 const calendarioTbody = document.querySelector('tbody');
 const formActividad = document.querySelector('form');
-const inputActividad = document.querySelector('input[placeholder="Ej: Running 5km"]');
+const inputActividad = document.querySelector('input[type="text"]');
 const inputHora = document.querySelector('input[type="time"]');
 const btnAgregar = document.querySelector('button[type="button"]');
 const listaActividades = document.querySelector('ul');
 const tituloDia = document.querySelector('h3');
 
+// Botones de navegación (el primer nav dentro del section del calendario)
+const navButtons = document.querySelectorAll('section > header nav button');
+const btnPrev = navButtons[0];
+const btnNext = navButtons[1];
+
 function generarCalendario() {
-    calendarioHeader.textContent = today.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).replace(/^\w/, c => c.toUpperCase());
+    const renderDate = new Date(currentYear, currentMonth, 1);
+    calendarioHeader.textContent = renderDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase();
 
     calendarioTbody.innerHTML = '';
 
@@ -31,20 +39,39 @@ function generarCalendario() {
         const tr = document.createElement('tr');
         for (let wd = 0; wd < 7; wd++) {
             const td = document.createElement('td');
-            td.className = 'p-3 bg-white/10 hover:bg-sky-200 hover:text-DeepSlate rounded-2xl transition-all cursor-pointer';
+            td.className = 'p-1';
+            
+            const div = document.createElement('div');
+            
+            // Check if this day corresponds to 'today'
+            const isToday = (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear());
+            
             if (week === 0 && wd < startDay) {
-                td.classList.add('opacity-30', 'italic');
-                td.textContent = '';
+                div.className = 'h-9 w-9 mx-auto flex items-center justify-center text-gray-300';
+                div.textContent = '';
             } else if (day > lastDay.getDate()) {
-                td.classList.add('opacity-30', 'italic');
-                td.textContent = '';
+                div.className = 'h-9 w-9 mx-auto flex items-center justify-center text-gray-300';
+                div.textContent = '';
             } else {
-                td.textContent = day;
-                if (day === currentDay) {
-                    td.classList.add('bg-sky-200', 'text-DeepSlate', 'ring-2', 'ring-OatmilkFoam');
+                div.textContent = day;
+                
+                // Formatear la fecha que esta celda representa
+                const cellDate = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                div.dataset.date = cellDate;
+                
+                if (cellDate === diaSeleccionado) {
+                    // Seleccionado
+                    div.className = 'cell-day h-9 w-9 mx-auto flex items-center justify-center rounded-full bg-DeepSlate text-white shadow-md cursor-pointer';
+                } else if (isToday) {
+                    // Hoy pero no seleccionado
+                    div.className = 'cell-day h-9 w-9 mx-auto flex items-center justify-center rounded-full border-2 border-sky-400 text-sky-500 hover:bg-sky-100 transition-colors cursor-pointer';
+                } else {
+                    // Normal
+                    div.className = 'cell-day h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer';
                 }
                 day++;
             }
+            td.appendChild(div);
             tr.appendChild(td);
         }
         calendarioTbody.appendChild(tr);
@@ -55,54 +82,136 @@ function generarCalendario() {
 function actualizarLista() {
     listaActividades.innerHTML = '';
     const acts = actividades[diaSeleccionado] || [];
+    
+    if (acts.length === 0) {
+        listaActividades.innerHTML = '<p class="text-center text-gray-400 italic text-sm mt-4 mb-4">No hay actividades planificadas.</p>';
+        return;
+    }
+
     acts.forEach(act => {
         const li = document.createElement('li');
-        li.className = 'flex justify-between items-center bg-OatmilkFoam p-4 rounded-2xl border-l-4 border-DeepSlate';
+        li.className = 'flex justify-between items-center bg-gray-50 p-4 rounded-2xl border-l-4 border-DeepSlate shadow-sm';
         li.innerHTML = `
-            <span class="font-bold text-DeepSlate text-sm uppercase italic">${act.nombre}</span>
-            <span class="text-xs font-black opacity-50 uppercase tracking-tighter">${act.hora}</span>
+            <span class="font-bold text-DeepSlate text-sm">${act.nombre}</span>
+            <span class="text-xs font-black text-gray-400 uppercase bg-white px-2 py-1 rounded-lg">${act.hora}</span>
         `;
         listaActividades.appendChild(li);
     });
 }
 
-function formatearFecha(dia) {
-    return `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
-}
+// Navegación de meses
+btnPrev.addEventListener('click', () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    generarCalendario();
+});
+
+btnNext.addEventListener('click', () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    generarCalendario();
+});
 
 calendarioTbody.addEventListener('click', (e) => {
-    if (e.target.tagName === 'TD' && !e.target.classList.contains('opacity-30')) {
-        document.querySelectorAll('tbody td').forEach(cell => cell.classList.remove('bg-sky-200', 'text-DeepSlate', 'ring-2', 'ring-OatmilkFoam'));
-
-        e.target.classList.add('bg-sky-200', 'text-DeepSlate', 'ring-2', 'ring-OatmilkFoam');
-        const dia = parseInt(e.target.textContent.trim());
-        diaSeleccionado = formatearFecha(dia);
-
-        const fecha = new Date(diaSeleccionado);
+    const div = e.target.closest('div.cell-day');
+    if (div) {
+        diaSeleccionado = div.dataset.date;
+        generarCalendario(); // Volvemos a pintar el calendario para reflejar la selección
+        
+        const fecha = new Date(diaSeleccionado + 'T00:00:00'); // Evitar timezone issues
         const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-        tituloDia.textContent = `Hoy: ${diasSemana[fecha.getDay()]} ${dia}`;
+        tituloDia.textContent = `Hoy: ${diasSemana[fecha.getDay()]} ${fecha.getDate()}`;
 
         actualizarLista();
     }
 });
 
-btnAgregar.addEventListener('click', () => {
+btnAgregar.addEventListener('click', async () => {
     const nombre = inputActividad.value.trim();
     const hora = inputHora.value;
-    if (nombre && hora) {
-        if (!actividades[diaSeleccionado]) actividades[diaSeleccionado] = [];
-        actividades[diaSeleccionado].push({ nombre, hora });
-        inputActividad.value = '';
-        inputHora.value = '';
-        actualizarLista();
+    
+    if (!nombre || !hora) {
+        alert("Por favor, ingresa una actividad y una hora.");
+        return;
+    }
+
+    const actividadData = {
+        descripcion: nombre,
+        hora: hora,
+        fecha: diaSeleccionado
+    };
+
+    if (token) {
+        // Guardar en el backend
+        try {
+            const response = await fetch(`${API_URL}/actividades`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(actividadData)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const nuevaActividad = { id: result.actividad.id, nombre: result.actividad.descripcion, hora: result.actividad.hora };
+                
+                if (!actividades[diaSeleccionado]) actividades[diaSeleccionado] = [];
+                actividades[diaSeleccionado].push(nuevaActividad);
+                // Ordenar por hora
+                actividades[diaSeleccionado].sort((a, b) => a.hora.localeCompare(b.hora));
+                
+                inputActividad.value = '';
+                inputHora.value = '';
+                actualizarLista();
+            } else {
+                alert("Error al guardar la actividad en el servidor.");
+            }
+        } catch (error) {
+            alert("Fallo la conexión con el servidor.");
+        }
+    } else {
+        alert("Debes iniciar sesión para planificar actividades.");
     }
 });
+
+// Inicialización de la vista
+const initFecha = new Date(diaSeleccionado + 'T00:00:00');
+const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+tituloDia.textContent = `Hoy: ${diasSemana[initFecha.getDay()]} ${initFecha.getDate()}`;
 
 generarCalendario();
 
-if (localStorage.getItem('tipoSesion') === 'login') {
-    fetch('../data/actividades.json').then(res => res.json()).then(data => {
-        actividades = data.actividades;
+// Cargar actividades desde el backend
+if (token) {
+    fetch(`${API_URL}/actividades/calendario`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Transformar la respuesta del backend al formato que usa el frontend
+        // Backend manda: { "2026-04-10": [{id: 1, descripcion: "Yoga", hora: "07:00"}], ... }
+        actividades = {};
+        for (let date in data) {
+            actividades[date] = data[date].map(item => ({
+                id: item.id,
+                nombre: item.descripcion,
+                hora: item.hora
+            }));
+        }
+        actualizarLista();
+    })
+    .catch(() => {
+        console.error("No se pudieron cargar las actividades del backend");
         actualizarLista();
     });
+} else {
+    actualizarLista();
 }
