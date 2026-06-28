@@ -103,10 +103,10 @@ export class NutritionService {
     });
 
     const comidas = {
-      desayuno: comidasList.filter(c => c.categoria === 'desayuno').map(c => ({ id: c.id, nombre: c.nombre })),
-      almuerzo: comidasList.filter(c => c.categoria === 'almuerzo').map(c => ({ id: c.id, nombre: c.nombre })),
-      cena: comidasList.filter(c => c.categoria === 'cena').map(c => ({ id: c.id, nombre: c.nombre })),
-      snacks: comidasList.filter(c => c.categoria === 'snacks').map(c => ({ id: c.id, nombre: c.nombre })),
+      desayuno: comidasList.filter(c => c.categoria === 'desayuno').map(c => ({ id: c.id, nombre: c.nombre, imagen: c.imagen })),
+      almuerzo: comidasList.filter(c => c.categoria === 'almuerzo').map(c => ({ id: c.id, nombre: c.nombre, imagen: c.imagen })),
+      cena: comidasList.filter(c => c.categoria === 'cena').map(c => ({ id: c.id, nombre: c.nombre, imagen: c.imagen })),
+      snacks: comidasList.filter(c => c.categoria === 'snacks').map(c => ({ id: c.id, nombre: c.nombre, imagen: c.imagen })),
     };
 
     return {
@@ -116,7 +116,7 @@ export class NutritionService {
   }
 
   async addMeal(userId: string, data: any) {
-    const { nombre, categoria, fecha } = data;
+    const { nombre, categoria, fecha, imagen } = data;
     if (!nombre || !categoria || !fecha) {
       throw new BadRequestException('Faltan datos de la comida');
     }
@@ -129,12 +129,14 @@ export class NutritionService {
         idUsuario: userId,
         nombre,
         categoria,
+        imagen,
         fecha: dateObj
       }
     });
 
     return {
       id: comida.id,
+      imagen: comida.imagen,
       mensaje: 'Comida guardada con exito'
     };
   }

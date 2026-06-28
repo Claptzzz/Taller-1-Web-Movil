@@ -24,6 +24,12 @@ function closeModal() {
     const modal = document.getElementById('mealModal');
     modal.close();
     currentMeal = null;
+    currentPhotoBase64 = null;
+    const imgEl = document.getElementById('foodImagePreview');
+    if (imgEl) {
+        imgEl.classList.add('hidden');
+        imgEl.src = '';
+    }
 }
 
 function agregarComidaDOM(mealType, comida) {
@@ -32,14 +38,23 @@ function agregarComidaDOM(mealType, comida) {
 
     const id = typeof comida === 'object' ? comida.id : Date.now();
     const descripcion = typeof comida === 'object' ? comida.nombre : comida;
+    const imagen = typeof comida === 'object' ? comida.imagen : null;
 
     const foodsContainer = mealArticle.querySelector('.foods');
     const foodItem = document.createElement('li');
     foodItem.className = 'bg-OatmilkFoam text-DeepSlate p-3 rounded-lg font-medium text-sm flex justify-between items-center break-words';
     foodItem.id = `meal-${id}`;
     
+    let imgHtml = '';
+    if (imagen) {
+        imgHtml = `<img src="${imagen}" class="w-12 h-12 object-cover rounded-md mr-3 shadow-sm border border-gray-200">`;
+    }
+
     foodItem.innerHTML = `
-        <span class="flex-1 text-center">${descripcion}</span>
+        <div class="flex items-center flex-1 overflow-hidden">
+            ${imgHtml}
+            <span class="flex-1 text-left truncate">${descripcion}</span>
+        </div>
         <button class="text-red-500 hover:text-red-700 font-bold ml-2 text-lg cursor-pointer transition-colors" onclick="borrarComida(${id}, this)">×</button>
     `;
 
@@ -71,6 +86,29 @@ async function borrarComida(id, btnElement) {
     }
 }
 
+let currentPhotoBase64 = null;
+
+async function takePhoto() {
+    try {
+        if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Camera) {
+            const image = await window.Capacitor.Plugins.Camera.getPhoto({
+                quality: 60,
+                allowEditing: false,
+                resultType: 'base64',
+                source: 'CAMERA'
+            });
+            currentPhotoBase64 = "data:image/jpeg;base64," + image.base64String;
+            const imgEl = document.getElementById('foodImagePreview');
+            imgEl.src = currentPhotoBase64;
+            imgEl.classList.remove('hidden');
+        } else {
+            alert("La cámara solo está disponible en la app nativa instalada (Capacitor).");
+        }
+    } catch (e) {
+        console.error("Error tomando foto", e);
+    }
+}
+
 async function addFood() {
     const input = document.getElementById('foodDescription');
     const description = input.value.trim();
@@ -86,24 +124,30 @@ async function addFood() {
     if (!token) return;
 
     try {
+        const payload = {
+            nombre: description,
+            categoria: currentMeal,
+            fecha: getHoy()
+        };
+
+        if (currentPhotoBase64) {
+            payload.imagen = currentPhotoBase64;
+        }
+
         const response = await fetch('https://salud-api-rzk9.onrender.com/nutrition/meals', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({
-                nombre: description,
-                categoria: currentMeal,
-                fecha: getHoy()
-            })
+            body: JSON.stringify(payload)
         });
 
         if (!checkAuth(response)) return;
 
         if (response.ok) {
             const data = await response.json();
-            agregarComidaDOM(currentMeal, { id: data.id, nombre: description });
+            agregarComidaDOM(currentMeal, { id: data.id, nombre: description, imagen: currentPhotoBase64 });
             closeModal();
         } else {
             alert('Error al guardar la comida en el servidor');
