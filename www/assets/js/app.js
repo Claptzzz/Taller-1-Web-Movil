@@ -39,15 +39,18 @@ function open_pop(type){
     modal.classList.remove('hidden');
     modoActual = type;
 
+    const nombre_group = document.getElementById('nombre_group');
     if(type === 'login'){
         modalTitle.textContent = 'Iniciar Sesion';
         submitModalBtn.textContent = 'ENTRAR';
         rep_pass.classList.add('hidden');
+        if (nombre_group) nombre_group.classList.add('hidden');
         mock_credentials.classList.remove('hidden');
     } else if (type === 'register') {
         modalTitle.textContent = 'Crear Cuenta';
         submitModalBtn.textContent = 'REGISTRARSE';
         rep_pass.classList.remove('hidden');
+        if (nombre_group) nombre_group.classList.remove('hidden');
         mock_credentials.classList.add('hidden');
     }
 }
@@ -171,7 +174,11 @@ async function submit_pop() {
             return;
         }
 
-        const nombre = email.split('@')[0];
+        const nombre = document.getElementById('nombre_reg')?.value?.trim();
+        if(!nombre) {
+            alert('Por favor, ingresa tu nombre o apodo');
+            return;
+        }
 
         try {
             const response = await fetch('https://salud-api-rzk9.onrender.com/auth/register', {

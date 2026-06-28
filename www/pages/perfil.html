@@ -142,6 +142,10 @@
             <button id="cerrar_pop" class="absolute top-6 right-6 h-10 w-10 flex items-center justify-center bg-gray-100 rounded-full text-xl font-bold hover:bg-gray-200 active:scale-90 transition-all">&times;</button>
             <h2 id="titulo_pop" class="text-2xl font-extrabold mb-6 mt-2">Iniciar Sesión</h2>
             <form class="flex flex-col gap-5">
+                <div id="nombre_group" class="flex flex-col gap-2 hidden">
+                    <label for="nombre_reg" class="font-bold text-sm ml-1 text-gray-600">Nombre o Apodo</label>
+                    <input type="text" id="nombre_reg" placeholder="Ej. Juan Pérez" class="min-h-[48px] bg-gray-50 border border-gray-200 rounded-2xl px-4 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                </div>
                 <div class="flex flex-col gap-2">
                     <label for="email" class="font-bold text-sm ml-1 text-gray-600">Correo Electrónico</label>
                     <input type="email" id="email" placeholder="tu@email.com" class="min-h-[48px] bg-gray-50 border border-gray-200 rounded-2xl px-4 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
