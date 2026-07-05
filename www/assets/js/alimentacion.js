@@ -10,12 +10,25 @@ function checkAuth(response) {
     return true;
 }
 
+function mostrarErrorComida(mensaje) {
+    const errorEl = document.getElementById('mealError');
+    errorEl.textContent = mensaje;
+    errorEl.hidden = false;
+}
+
+function ocultarErrorComida() {
+    const errorEl = document.getElementById('mealError');
+    errorEl.hidden = true;
+    errorEl.textContent = '';
+}
+
 function openModal(mealType) {
     currentMeal = mealType;
     const modal = document.getElementById('mealModal');
     const input = document.getElementById('foodDescription');
 
     input.value = '';
+    ocultarErrorComida();
     modal.showModal();
     input.focus();
 }
@@ -95,7 +108,9 @@ async function takePhoto() {
                 quality: 60,
                 allowEditing: false,
                 resultType: 'base64',
-                source: 'CAMERA'
+                source: 'CAMERA',
+                width: 1024,
+                height: 1024
             });
             currentPhotoBase64 = "data:image/jpeg;base64," + image.base64String;
             const imgEl = document.getElementById('foodImagePreview');
@@ -114,9 +129,10 @@ async function addFood() {
     const description = input.value.trim();
 
     if (description === '') {
-        alert('Por favor ingresa una descripción de la comida');
+        mostrarErrorComida('Ingresa una descripción de la comida.');
         return;
     }
+    ocultarErrorComida();
 
     if (!currentMeal) return;
 
@@ -150,10 +166,23 @@ async function addFood() {
             agregarComidaDOM(currentMeal, { id: data.id, nombre: description, imagen: currentPhotoBase64 });
             closeModal();
         } else {
-            alert('Error al guardar la comida en el servidor');
+            // Leer el mensaje real del backend para diagnosticar (ej: body demasiado grande, validación)
+            let detalle = '';
+            try {
+                const errorBody = await response.json();
+                detalle = errorBody.message || errorBody.error || '';
+                if (Array.isArray(detalle)) detalle = detalle.join(', ');
+            } catch (_) {
+                // el body de error no era JSON; seguimos solo con el status
+            }
+            mostrarErrorComida(
+                detalle
+                    ? `Error del servidor (${response.status}): ${detalle}`
+                    : `Error del servidor (${response.status}) al guardar la comida.`
+            );
         }
     } catch(e) {
-        alert('No se pudo conectar al servidor');
+        mostrarErrorComida('Sin conexión con el servidor. Revisa tu internet e intenta de nuevo.');
     }
 }
 

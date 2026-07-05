@@ -185,6 +185,20 @@ function generarCalendario() {
     }
 }
 
+const DIAS_SEMANA = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+function fechaHoyLocal() {
+    const ahora = new Date();
+    return `${ahora.getFullYear()}-${(ahora.getMonth() + 1).toString().padStart(2, '0')}-${ahora.getDate().toString().padStart(2, '0')}`;
+}
+
+// "Hoy · " solo cuando la fecha seleccionada es realmente hoy
+function actualizarTituloDia() {
+    const fecha = new Date(diaSeleccionado + 'T00:00:00'); // Evitar timezone issues
+    const prefijo = diaSeleccionado === fechaHoyLocal() ? 'Hoy · ' : '';
+    tituloDia.textContent = `${prefijo}${DIAS_SEMANA[fecha.getDay()]} ${fecha.getDate()}`;
+}
+
 function actualizarLista() {
     listaActividades.innerHTML = '';
     const acts = actividades[diaSeleccionado] || [];
@@ -198,14 +212,17 @@ function actualizarLista() {
         const li = document.createElement('li');
         li.className = 'flex justify-between items-center bg-gray-50 p-4 rounded-2xl border-l-4 border-DeepSlate shadow-sm';
         const tieneUbicacion = act.lat != null && act.lng != null;
-        const linkMapa = tieneUbicacion
-            ? `<a href="https://www.google.com/maps?q=${act.lat},${act.lng}" target="_blank" rel="noopener"
-                  class="text-[11px] font-medium text-sky-600 hover:text-sky-700 transition-colors duration-150">Ver en mapa</a>`
+        const filaUbicacion = tieneUbicacion
+            ? `<span class="flex items-center flex-wrap gap-x-1.5 text-[11px] text-DeepSlateLight/80">
+                    📍 Ubicación registrada · ${Number(act.lat).toFixed(4)}, ${Number(act.lng).toFixed(4)}
+                    <a href="https://www.google.com/maps?q=${act.lat},${act.lng}" target="_blank" rel="noopener"
+                       class="font-medium text-sky-600 hover:text-sky-700 transition-colors duration-150">Ver en mapa</a>
+               </span>`
             : '';
         li.innerHTML = `
             <div class="flex flex-col gap-0.5">
                 <span class="font-bold text-DeepSlate text-sm">${act.nombre}</span>
-                ${linkMapa}
+                ${filaUbicacion}
             </div>
             <span class="text-xs font-black text-gray-400 uppercase bg-white px-2 py-1 rounded-lg">${act.hora}</span>
         `;
@@ -237,11 +254,7 @@ calendarioTbody.addEventListener('click', (e) => {
     if (div) {
         diaSeleccionado = div.dataset.date;
         generarCalendario(); // Volvemos a pintar el calendario para reflejar la selección
-        
-        const fecha = new Date(diaSeleccionado + 'T00:00:00'); // Evitar timezone issues
-        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-        tituloDia.textContent = `Hoy: ${diasSemana[fecha.getDay()]} ${fecha.getDate()}`;
-
+        actualizarTituloDia();
         actualizarLista();
     }
 });
@@ -326,10 +339,7 @@ btnAgregar.addEventListener('click', async () => {
 });
 
 // Inicialización de la vista
-const initFecha = new Date(diaSeleccionado + 'T00:00:00');
-const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-tituloDia.textContent = `Hoy: ${diasSemana[initFecha.getDay()]} ${initFecha.getDate()}`;
-
+actualizarTituloDia();
 generarCalendario();
 
 // Cargar actividades desde el backend

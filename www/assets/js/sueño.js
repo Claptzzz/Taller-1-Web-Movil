@@ -61,11 +61,16 @@ function ajustarGraficoOrientacion(esLandscape) {
     sleepChart.options.scales.x.title.font = { size: tamanoTitulos };
     sleepChart.options.scales.y.title.font = { size: tamanoTitulos };
 
-    // rAF: espera a que el layout del nuevo modo esté aplicado antes de medir
-    requestAnimationFrame(() => {
+    // Doble rAF: garantiza que el CSS del nuevo modo ya está aplicado al medir.
+    // Corre en AMBAS direcciones (entrar y salir de landscape).
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        // Chart.js deja width/height inline del modo anterior en el canvas;
+        // sin limpiarlos, el contenedor en portrait hereda el tamaño landscape
+        sleepChart.canvas.style.removeProperty('width');
+        sleepChart.canvas.style.removeProperty('height');
         sleepChart.resize();
         sleepChart.update();
-    });
+    }));
 }
 
 mqLandscape.addEventListener('change', (e) => ajustarGraficoOrientacion(e.matches));
