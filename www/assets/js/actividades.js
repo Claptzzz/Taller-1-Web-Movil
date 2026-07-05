@@ -15,7 +15,7 @@ const calendarioTbody = document.querySelector('tbody');
 const formActividad = document.querySelector('form');
 const inputActividad = document.querySelector('input[type="text"]');
 const inputHora = document.querySelector('input[type="time"]');
-const btnAgregar = document.querySelector('button[type="button"]');
+const btnAgregar = document.getElementById('btn_agregar');
 const listaActividades = document.querySelector('ul');
 const tituloDia = document.querySelector('h3');
 
@@ -23,6 +23,91 @@ const tituloDia = document.querySelector('h3');
 const navButtons = document.querySelectorAll('section > header nav button');
 const btnPrev = navButtons[0];
 const btnNext = navButtons[1];
+
+// --- Ubicación GPS ---
+const btnUbicacion = document.getElementById('btn_ubicacion');
+const btnUbicacionTexto = document.getElementById('btn_ubicacion_texto');
+const chipUbicacion = document.getElementById('chip_ubicacion');
+const chipUbicacionTexto = document.getElementById('chip_ubicacion_texto');
+const btnQuitarUbicacion = document.getElementById('btn_quitar_ubicacion');
+const errorUbicacion = document.getElementById('error_ubicacion');
+
+let ubicacionCapturada = null; // {lat, lng} para la próxima actividad
+
+function obtenerPosicion() {
+    const opciones = { enableHighAccuracy: true, timeout: 10000 };
+    const geoCapacitor = window.Capacitor?.Plugins?.Geolocation;
+    if (geoCapacitor) {
+        return geoCapacitor.getCurrentPosition(opciones);
+    }
+    // Fallback para navegador de escritorio (pruebas en Chrome)
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject(new Error('La geolocalización no está disponible en este dispositivo'));
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(resolve, reject, opciones);
+    });
+}
+
+function mostrarChipUbicacion() {
+    chipUbicacionTexto.textContent = `${ubicacionCapturada.lat.toFixed(4)}, ${ubicacionCapturada.lng.toFixed(4)}`;
+    chipUbicacion.hidden = false;
+    // Doble rAF: asegura que el estado inicial (opacity-0 scale-95) se pinte antes de transicionar
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        chipUbicacion.classList.remove('opacity-0', 'scale-95');
+    }));
+}
+
+function ocultarChipUbicacion() {
+    chipUbicacion.classList.add('opacity-0', 'scale-95');
+    chipUbicacion.hidden = true;
+}
+
+function setEstadoUbicacion(estado) {
+    errorUbicacion.hidden = true;
+    switch (estado) {
+        case 'idle':
+            btnUbicacion.disabled = false;
+            btnUbicacionTexto.textContent = 'Agregar mi ubicación';
+            ocultarChipUbicacion();
+            break;
+        case 'loading':
+            btnUbicacion.disabled = true;
+            btnUbicacionTexto.textContent = 'Obteniendo ubicación…';
+            break;
+        case 'success':
+            btnUbicacion.disabled = false;
+            btnUbicacionTexto.textContent = 'Ubicación lista ✓';
+            mostrarChipUbicacion();
+            break;
+    }
+}
+
+btnUbicacion.addEventListener('click', async () => {
+    setEstadoUbicacion('loading');
+    try {
+        const posicion = await obtenerPosicion();
+        ubicacionCapturada = {
+            lat: posicion.coords.latitude,
+            lng: posicion.coords.longitude
+        };
+        setEstadoUbicacion('success');
+    } catch (err) {
+        ubicacionCapturada = null;
+        setEstadoUbicacion('idle');
+        const denegado = err?.code === 1 || /denied|denegad/i.test(err?.message || '');
+        errorUbicacion.textContent = denegado
+            ? 'Permiso de ubicación denegado. Puedes activarlo en los ajustes del teléfono.'
+            : 'No se pudo obtener tu ubicación. Intenta de nuevo.';
+        errorUbicacion.hidden = false;
+    }
+});
+
+btnQuitarUbicacion.addEventListener('click', () => {
+    ubicacionCapturada = null;
+    setEstadoUbicacion('idle');
+});
 
 function generarCalendario() {
     const renderDate = new Date(currentYear, currentMonth, 1);
@@ -91,8 +176,16 @@ function actualizarLista() {
     acts.forEach(act => {
         const li = document.createElement('li');
         li.className = 'flex justify-between items-center bg-gray-50 p-4 rounded-2xl border-l-4 border-DeepSlate shadow-sm';
+        const tieneUbicacion = act.lat != null && act.lng != null;
+        const linkMapa = tieneUbicacion
+            ? `<a href="https://www.google.com/maps?q=${act.lat},${act.lng}" target="_blank" rel="noopener"
+                  class="text-[11px] font-medium text-sky-600 hover:text-sky-700 transition-colors duration-150">Ver en mapa</a>`
+            : '';
         li.innerHTML = `
-            <span class="font-bold text-DeepSlate text-sm">${act.nombre}</span>
+            <div class="flex flex-col gap-0.5">
+                <span class="font-bold text-DeepSlate text-sm">${act.nombre}</span>
+                ${linkMapa}
+            </div>
             <span class="text-xs font-black text-gray-400 uppercase bg-white px-2 py-1 rounded-lg">${act.hora}</span>
         `;
         listaActividades.appendChild(li);
@@ -147,6 +240,12 @@ btnAgregar.addEventListener('click', async () => {
         fecha: diaSeleccionado
     };
 
+    // Solo enviamos la ubicación si el usuario la capturó
+    if (ubicacionCapturada) {
+        actividadData.lat = ubicacionCapturada.lat;
+        actividadData.lng = ubicacionCapturada.lng;
+    }
+
     if (token) {
         // Guardar en el backend
         try {
@@ -161,15 +260,23 @@ btnAgregar.addEventListener('click', async () => {
 
             if (response.ok) {
                 const result = await response.json();
-                const nuevaActividad = { id: result.actividad.id, nombre: result.actividad.descripcion, hora: result.actividad.hora };
-                
+                const nuevaActividad = {
+                    id: result.actividad.id,
+                    nombre: result.actividad.descripcion,
+                    hora: result.actividad.hora,
+                    lat: result.actividad.lat,
+                    lng: result.actividad.lng
+                };
+
                 if (!actividades[diaSeleccionado]) actividades[diaSeleccionado] = [];
                 actividades[diaSeleccionado].push(nuevaActividad);
                 // Ordenar por hora
                 actividades[diaSeleccionado].sort((a, b) => a.hora.localeCompare(b.hora));
-                
+
                 inputActividad.value = '';
                 inputHora.value = '';
+                ubicacionCapturada = null;
+                setEstadoUbicacion('idle');
                 actualizarLista();
             } else {
                 alert("Error al guardar la actividad en el servidor.");
@@ -203,7 +310,9 @@ if (token) {
             actividades[date] = data[date].map(item => ({
                 id: item.id,
                 nombre: item.descripcion,
-                hora: item.hora
+                hora: item.hora,
+                lat: item.lat,
+                lng: item.lng
             }));
         }
         actualizarLista();
