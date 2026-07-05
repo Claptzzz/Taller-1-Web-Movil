@@ -49,6 +49,8 @@ model Actividad {
   descripcion   String
   hora          String
   fecha         DateTime
+  lat           Float?
+  lng           Float?
 }
 
 model Comida {
