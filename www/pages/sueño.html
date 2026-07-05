@@ -16,11 +16,53 @@
             --color-DeepSlateLight: #5E6373;
         }
     </style>
+
+    <style>
+        /* Modo análisis: en landscape el gráfico domina la pantalla.
+           Acotado a esta vista vía la clase .pagina-sueno del body. */
+        @keyframes aparecer-suave {
+            from { opacity: 0; }
+        }
+
+        @media (orientation: landscape) {
+            .pagina-sueno .solo-portrait {
+                display: none;
+            }
+            .pagina-sueno .grafico-sueno {
+                position: fixed;
+                inset: 0;
+                z-index: 60;
+                width: 100dvw;
+                height: 100dvh;
+                border-radius: 0;
+                border: none;
+                padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0px));
+                animation: aparecer-suave 180ms cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            .pagina-sueno .grafico-sueno h2 {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (orientation: portrait) {
+            .pagina-sueno .solo-portrait,
+            .pagina-sueno .grafico-sueno {
+                animation: aparecer-suave 180ms cubic-bezier(0.23, 1, 0.32, 1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pagina-sueno .solo-portrait,
+            .pagina-sueno .grafico-sueno {
+                animation: none;
+            }
+        }
+    </style>
 </head>
-<body class="bg-OatmilkFoam text-DeepSlate flex flex-col min-h-screen overflow-x-hidden pb-24 font-sans selection:bg-sky-200">
+<body class="pagina-sueno bg-OatmilkFoam text-DeepSlate flex flex-col min-h-screen overflow-x-hidden pb-24 font-sans selection:bg-sky-200">
 
     <!-- TOP APP BAR -->
-    <header class="sticky top-0 z-40 w-full bg-OatmilkFoam/90 backdrop-blur-md px-6 py-4 flex justify-between items-center shadow-sm">
+    <header class="solo-portrait sticky top-0 z-40 w-full bg-OatmilkFoam/90 backdrop-blur-md px-6 py-4 flex justify-between items-center shadow-sm">
         <div class="flex items-center gap-2">
             <svg class="h-6 w-6 text-DeepSlate"><use xlink:href="../assets/img/sprites.svg#documento-icon" /></svg>
             <h1 class="font-bold text-xl tracking-tighter uppercase">SUEÑO</h1>
@@ -33,7 +75,7 @@
     <main class="w-full max-w-md mx-auto mt-6 px-4 flex-grow flex flex-col gap-6">
 
         <!-- SECCIÓN: REGISTRAR SUEÑO -->
-        <article class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+        <article class="solo-portrait bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
             <h2 class="text-sm font-bold mb-4 text-DeepSlateLight uppercase tracking-wider text-center">Registrar Sueño</h2>
             <form id="sleepForm" class="flex flex-col gap-4">
                 <div class="flex gap-4">
@@ -73,15 +115,22 @@
         </article>
 
         <!-- SECCIÓN GRÁFICO -->
-        <section class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col min-h-[350px]">
+        <section class="grafico-sueno bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col min-h-[350px]">
             <h2 class="text-sm font-bold mb-4 text-DeepSlateLight uppercase tracking-wider text-center">Horas de sueño</h2>
             <div class="flex-grow flex items-center justify-center relative w-full h-full">
                 <canvas id="sleepChart"></canvas>
             </div>
+            <p class="solo-portrait flex items-center justify-center gap-2 text-xs font-medium text-DeepSlateLight/70 mt-3">
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-2.64-6.36"/>
+                    <polyline points="21 3 21 9 15 9"/>
+                </svg>
+                Gira el teléfono para ver el gráfico en grande
+            </p>
         </section>
 
         <!-- Explicación -->
-        <article class="bg-sky-50 p-6 rounded-3xl border border-sky-100 shadow-sm mt-2">
+        <article class="solo-portrait bg-sky-50 p-6 rounded-3xl border border-sky-100 shadow-sm mt-2">
             <div class="flex items-start gap-3">
                 <svg class="w-6 h-6 text-sky-500 shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <p class="text-sm text-sky-800 font-medium leading-relaxed">
@@ -95,7 +144,7 @@
     </main>
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav id="main_nav" class="fixed bottom-0 w-full bg-DeepSlate rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex justify-around items-center px-4 py-2 z-50 border-t border-white/5 pb-[env(safe-area-inset-bottom,16px)] text-OatmilkFoam"></nav>
+    <nav id="main_nav" class="solo-portrait fixed bottom-0 w-full bg-DeepSlate rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex justify-around items-center px-4 py-2 z-50 border-t border-white/5 pb-[env(safe-area-inset-bottom,16px)] text-OatmilkFoam"></nav>
 
     <script src="../assets/js/navbar.js"></script>
     <script src="../assets/js/sueño.js"></script>

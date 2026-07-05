@@ -48,6 +48,29 @@ const sleepChart = new Chart(ctx, {
     }
 });
 
+// --- Modo análisis en landscape ---
+// Al rotar, el CSS (.pagina-sueno) expande el contenedor; aquí forzamos el
+// reflow del canvas y subimos la legibilidad de ticks y títulos de ejes.
+const mqLandscape = window.matchMedia('(orientation: landscape)');
+
+function ajustarGraficoOrientacion(esLandscape) {
+    const tamanoTicks = esLandscape ? 16 : 12;
+    const tamanoTitulos = esLandscape ? 14 : 12;
+    sleepChart.options.scales.x.ticks.font = { size: tamanoTicks };
+    sleepChart.options.scales.y.ticks.font = { size: tamanoTicks };
+    sleepChart.options.scales.x.title.font = { size: tamanoTitulos };
+    sleepChart.options.scales.y.title.font = { size: tamanoTitulos };
+
+    // rAF: espera a que el layout del nuevo modo esté aplicado antes de medir
+    requestAnimationFrame(() => {
+        sleepChart.resize();
+        sleepChart.update();
+    });
+}
+
+mqLandscape.addEventListener('change', (e) => ajustarGraficoOrientacion(e.matches));
+ajustarGraficoOrientacion(mqLandscape.matches); // estado inicial (ej: abrir ya rotado)
+
 const token = localStorage.getItem('token');
 const API_URL = 'https://salud-api-rzk9.onrender.com';
 
