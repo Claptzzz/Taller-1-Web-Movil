@@ -49,6 +49,8 @@ model Actividad {
   descripcion   String
   hora          String
   fecha         DateTime
+  lat           Float?
+  lng           Float?
 }
 
 model Comida {
@@ -57,6 +59,7 @@ model Comida {
   usuario       Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
   nombre        String
   categoria     String   // En SQLite guardaremos "DESAYUNO", "ALMUERZO", etc. como texto
+  imagen        String?
   fecha         DateTime
 }
 

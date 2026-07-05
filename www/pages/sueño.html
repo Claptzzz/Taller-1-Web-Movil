@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina de Sueño</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="../assets/img/icon-sleepwell.ico" type="image/x-icon">
+
+    <style type="text/tailwindcss">
+        @theme {
+            --color-OatmilkFoam: #F8F4EF;
+            --color-DeepSlate: #40434E;
+            --color-DeepSlateDark: #353741;
+            --color-DeepSlateLight: #5E6373;
+        }
+    </style>
+
+    <style>
+        /* Modo análisis: en landscape el gráfico domina la pantalla.
+           Acotado a esta vista vía la clase .pagina-sueno del body. */
+        @keyframes aparecer-suave {
+            from { opacity: 0; }
+        }
+
+        @media (orientation: landscape) {
+            .pagina-sueno .solo-portrait {
+                display: none;
+            }
+            .pagina-sueno .grafico-sueno {
+                position: fixed;
+                inset: 0;
+                z-index: 60;
+                width: 100dvw;
+                height: 100dvh;
+                border-radius: 0;
+                border: none;
+                padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0px));
+                animation: aparecer-suave 180ms cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            .pagina-sueno .grafico-sueno h2 {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (orientation: portrait) {
+            .pagina-sueno .solo-portrait,
+            .pagina-sueno .grafico-sueno {
+                animation: aparecer-suave 180ms cubic-bezier(0.23, 1, 0.32, 1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pagina-sueno .solo-portrait,
+            .pagina-sueno .grafico-sueno {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body class="pagina-sueno bg-OatmilkFoam text-DeepSlate flex flex-col min-h-screen overflow-x-hidden pb-24 font-sans selection:bg-sky-200">
+
+    <!-- TOP APP BAR -->
+    <header class="solo-portrait sticky top-0 z-40 w-full bg-OatmilkFoam/90 backdrop-blur-md px-6 py-4 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-2">
+            <svg class="h-6 w-6 text-DeepSlate"><use xlink:href="../assets/img/sprites.svg#documento-icon" /></svg>
+            <h1 class="font-bold text-xl tracking-tighter uppercase">SUEÑO</h1>
+        </div>
+        <!-- Enlaces ocultos requeridos por navbar.js -->
+        <a id="logo_link" href="../index.html" class="hidden"></a>
+        <a id="perfil_link" href="perfil.html" class="hidden"></a>
+    </header>
+
+    <main class="w-full max-w-md mx-auto mt-6 px-4 flex-grow flex flex-col gap-6">
+
+        <!-- SECCIÓN: REGISTRAR SUEÑO -->
+        <article class="solo-portrait bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+            <h2 class="text-sm font-bold mb-4 text-DeepSlateLight uppercase tracking-wider text-center">Registrar Sueño</h2>
+            <form id="sleepForm" class="flex flex-col gap-4">
+                <div class="flex gap-4">
+                    <div class="flex flex-col gap-2 w-1/2">
+                        <label class="text-xs font-bold uppercase opacity-70 ml-1">Me dormí a las</label>
+                        <input type="time" id="sleepStart" class="h-12 bg-gray-50 border border-gray-200 text-DeepSlate p-2 rounded-2xl w-full outline-none font-bold text-center focus:border-sky-400 transition-all">
+                    </div>
+                    <div class="flex flex-col gap-2 w-1/2">
+                        <label class="text-xs font-bold uppercase opacity-70 ml-1">Desperté a las</label>
+                        <input type="time" id="sleepEnd" class="h-12 bg-gray-50 border border-gray-200 text-DeepSlate p-2 rounded-2xl w-full outline-none font-bold text-center focus:border-sky-400 transition-all">
+                    </div>
+                </div>
+                
+                <!-- Selector de Calidad de Sueño -->
+                <div class="flex flex-col gap-2 w-full mt-2">
+                    <label class="text-xs font-bold uppercase opacity-70 ml-1 text-center mb-1">¿Cómo sentiste tu descanso?</label>
+                    <div class="flex bg-gray-50 p-1 rounded-2xl border border-gray-200 shadow-inner">
+                        <label class="flex-1 text-center">
+                            <input type="radio" name="calidadSueno" value="BAJA" class="peer hidden">
+                            <div class="cursor-pointer font-bold text-sm text-gray-400 py-3 rounded-xl peer-checked:bg-white peer-checked:text-red-500 peer-checked:shadow-sm transition-all">Malo</div>
+                        </label>
+                        <label class="flex-1 text-center">
+                            <input type="radio" name="calidadSueno" value="MEDIA" class="peer hidden" checked>
+                            <div class="cursor-pointer font-bold text-sm text-gray-400 py-3 rounded-xl peer-checked:bg-white peer-checked:text-yellow-600 peer-checked:shadow-sm transition-all">Regular</div>
+                        </label>
+                        <label class="flex-1 text-center">
+                            <input type="radio" name="calidadSueno" value="ALTA" class="peer hidden">
+                            <div class="cursor-pointer font-bold text-sm text-gray-400 py-3 rounded-xl peer-checked:bg-white peer-checked:text-green-500 peer-checked:shadow-sm transition-all">Bueno</div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" onclick="registerSleep()" class="mt-2 w-full bg-DeepSlate text-white font-bold min-h-[56px] rounded-2xl shadow-md hover:bg-DeepSlateDark active:scale-95 transition-all uppercase tracking-wider">
+                    Guardar
+                </button>
+            </form>
+        </article>
+
+        <!-- SECCIÓN GRÁFICO -->
+        <section class="grafico-sueno bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col min-h-[350px]">
+            <h2 class="text-sm font-bold mb-4 text-DeepSlateLight uppercase tracking-wider text-center">Horas de sueño</h2>
+            <div class="flex-grow flex items-center justify-center relative w-full h-full">
+                <canvas id="sleepChart"></canvas>
+            </div>
+            <p class="solo-portrait flex items-center justify-center gap-2 text-xs font-medium text-DeepSlateLight/70 mt-3">
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-2.64-6.36"/>
+                    <polyline points="21 3 21 9 15 9"/>
+                </svg>
+                Gira el teléfono para ver el gráfico en grande
+            </p>
+        </section>
+
+        <!-- Explicación -->
+        <article class="solo-portrait bg-sky-50 p-6 rounded-3xl border border-sky-100 shadow-sm mt-2">
+            <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-sky-500 shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <p class="text-sm text-sky-800 font-medium leading-relaxed">
+                    Mantener un buen ciclo de sueño mejora la memoria, fortalece el sistema inmunológico y regula el estado de ánimo. 
+                    <br><br>
+                    <strong>Objetivo:</strong> Dormir entre 7 y 9 horas cada noche.
+                </p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav id="main_nav" class="solo-portrait fixed bottom-0 w-full bg-DeepSlate rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex justify-around items-center px-4 py-2 z-50 border-t border-white/5 pb-[env(safe-area-inset-bottom,16px)] text-OatmilkFoam"></nav>
+
+    <script src="../assets/js/navbar.js"></script>
+    <script src="../assets/js/sueño.js"></script>
+</body>
+</html>

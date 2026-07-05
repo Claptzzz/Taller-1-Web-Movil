@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/formInput.css">
+    <link rel="shortcut icon" href="../assets/img/icon-sleepwell.ico" type="image/x-icon">
+
+    <style type="text/tailwindcss">
+        @theme {
+        --color-OatmilkFoam: #F8F4EF;
+        --color-DeepSlate: #40434E;
+        --color-DeepSlateDark: #353741;
+        --color-DeepSlateLight: #5E6373;
+        }
+    </style>
+
+    <title>Mi Perfil</title>
+</head>
+<body class="bg-OatmilkFoam text-DeepSlate flex flex-col min-h-screen overflow-x-hidden pb-24 font-sans selection:bg-sky-200">
+    
+    <!-- TOP APP BAR -->
+    <header class="sticky top-0 z-40 w-full bg-OatmilkFoam/90 backdrop-blur-md px-6 py-4 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-2">
+            <svg class="h-6 w-6 text-DeepSlate"><use xlink:href="../assets/img/sprites.svg#logo-icon" /></svg>
+            <h1 class="font-bold text-xl tracking-tighter">SLEEPWELL</h1>
+        </div>
+        <!-- Enlaces ocultos requeridos por navbar.js -->
+        <a id="logo_link" href="../index.html" class="hidden"></a>
+        <a id="perfil_link" href="perfil.html" class="hidden"></a>
+    </header>
+
+    <!-- PANEL DE CONTROL (CUANDO ESTÁ LOGUEADO) -->
+    <section class="user_view w-full px-4 flex-grow flex flex-col">
+        <!-- BARRA DE LOGIN -->
+        <section id="auth_login" class="z-20 w-full max-w-md mx-auto mt-10 p-8 flex flex-col items-center rounded-3xl bg-white shadow-md border border-gray-100">
+            <div class="bg-sky-100 p-4 rounded-full mb-4">
+                <svg class="h-10 w-10 text-sky-600"><use xlink:href="../assets/img/sprites.svg#user-icon" /></svg>
+            </div>
+            <h1 class="font-bold text-center text-lg mb-6 leading-tight">Accede para sincronizar tus datos de salud y sueño</h1>
+            <div id="logins" class="flex flex-col w-full gap-4">
+                <button type="button" id="button_log" class="w-full bg-DeepSlate text-white rounded-2xl min-h-[48px] font-bold shadow-md hover:bg-DeepSlateDark active:scale-95 transition-all">INICIAR SESIÓN</button>
+                <button type="button" id="button_reg" class="w-full bg-white text-DeepSlate border-2 border-gray-200 rounded-2xl min-h-[48px] font-bold hover:bg-gray-50 active:scale-95 transition-all">CREAR CUENTA</button>
+            </div>
+        </section>
+    </section>
+
+    <!-- PERFIL DESARROLLADO -->
+    <main id="content_tabs" class="hidden w-full max-w-md mx-auto mt-6 px-4 flex-grow flex flex-col pb-6">
+        
+        <header class="text-center mb-8 flex flex-col items-center gap-3">
+            <div class="bg-DeepSlate text-OatmilkFoam h-16 w-16 rounded-full flex items-center justify-center shadow-md mb-2">
+                <svg class="h-8 w-8"><use xlink:href="../assets/img/sprites.svg#user-icon" /></svg>
+            </div>
+            <h2 class="text-2xl font-extrabold text-DeepSlate">Bienvenido, *nombre*</h2>
+            <button type="button" id="button_logout" class="text-sm font-bold text-red-500 bg-red-50 px-6 min-h-[48px] rounded-xl hover:bg-red-100 active:scale-95 transition-all flex items-center justify-center">Cerrar Sesión</button>
+        </header>
+
+        <!-- FORMULARIO DE DATOS -->
+        <section class="flex flex-col gap-6 mb-10">
+            <article class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                <h3 class="text-sm font-bold mb-4 text-DeepSlateLight uppercase tracking-wider">Tus Métricas</h3>
+                <div class="flex flex-col gap-4">
+                    <label class="flex justify-between items-center font-medium">Peso 
+                        <input type="number" id="in-peso" placeholder="kg" class="w-24 h-12 bg-gray-50 border border-gray-200 text-DeepSlate rounded-xl px-4 outline-none font-bold text-right focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                    </label>
+                    <label class="flex justify-between items-center font-medium">Altura 
+                        <input type="number" id="in-altura" placeholder="cm" class="w-24 h-12 bg-gray-50 border border-gray-200 text-DeepSlate rounded-xl px-4 outline-none font-bold text-right focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                    </label>
+                    <label class="flex justify-between items-center font-medium">% Grasa 
+                        <input type="number" id="in-grasa" placeholder="%" class="w-24 h-12 bg-gray-50 border border-gray-200 text-DeepSlate rounded-xl px-4 outline-none font-bold text-right focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                    </label>
+                    <label class="flex justify-between items-center font-medium">Cintura 
+                        <input type="number" id="in-cintura" placeholder="cm" class="w-24 h-12 bg-gray-50 border border-gray-200 text-DeepSlate rounded-xl px-4 outline-none font-bold text-right focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                    </label>
+                    <button type="button" id="btn-save-metrics" class="mt-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold min-h-[48px] rounded-2xl shadow-md hover:opacity-90 active:scale-95 transition-all">ACTUALIZAR MÉTRICAS</button>
+                </div>
+            </article>
+
+            <article class="bg-DeepSlate p-6 rounded-3xl shadow-md text-white relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 opacity-10">
+                    <svg class="h-32 w-32"><use xlink:href="../assets/img/sprites.svg#graph-icon" /></svg>
+                </div>
+                <h3 class="text-sm font-bold mb-5 text-sky-200 uppercase tracking-wider">Resultados</h3>
+                <div class="flex flex-col gap-4 font-medium relative z-10">
+                    <div class="flex justify-between items-center bg-white/10 p-3 rounded-xl">
+                        <span>Tu RFM</span>
+                        <span id="res-imc" class="font-bold text-lg text-white">--</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-white/10 p-3 rounded-xl">
+                        <span>Estado</span>
+                        <span id="res-estado" class="font-bold text-sky-300 uppercase">--</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-2 pt-2">
+                        <span class="text-sm opacity-80">Peso Ideal</span>
+                        <span id="res-peso" class="font-bold">-- kg</span>
+                    </div>
+                    <div class="flex justify-between items-center border-white/10 pb-1">
+                        <span class="text-sm opacity-80">Cintura Ideal</span>
+                        <span id="res-cintura" class="font-bold">-- cm</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+    
+        <!-- BOTONES DE CATEGORIAS -->
+        <div class="flex flex-col gap-4">
+            <h3 class="text-sm font-bold text-DeepSlateLight uppercase tracking-wider mb-2">Accesos Rápidos</h3>
+            <a href="actividades.html" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 active:scale-95 transition-all">
+                <div class="bg-orange-100 p-3 rounded-xl text-orange-500"><svg class="h-6 w-6"><use xlink:href="../assets/img/sprites.svg#spark-icon" /></svg></div>
+                <div class="flex-grow">
+                    <h4 class="font-bold text-DeepSlate">Actividades</h4>
+                    <p class="text-xs text-gray-500">Tus entrenamientos diarios</p>
+                </div>
+            </a>
+            <a href="alimentacion.html" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 active:scale-95 transition-all">
+                <div class="bg-green-100 p-3 rounded-xl text-green-600"><svg class="h-6 w-6"><use xlink:href="../assets/img/sprites.svg#documento-icon" /></svg></div>
+                <div class="flex-grow">
+                    <h4 class="font-bold text-DeepSlate">Alimentación</h4>
+                    <p class="text-xs text-gray-500">Plan nutricional e ingesta</p>
+                </div>
+            </a>
+            <a href="sueño.html" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 active:scale-95 transition-all">
+                <div class="bg-indigo-100 p-3 rounded-xl text-indigo-500"><svg class="h-6 w-6"><use xlink:href="../assets/img/sprites.svg#graph-icon" /></svg></div>
+                <div class="flex-grow">
+                    <h4 class="font-bold text-DeepSlate">Ciclos de Sueño</h4>
+                    <p class="text-xs text-gray-500">Análisis y optimización</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav id="main_nav" class="fixed bottom-0 w-full bg-DeepSlate rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex justify-around items-center px-4 py-2 z-50 border-t border-white/5 pb-[env(safe-area-inset-bottom,16px)] text-OatmilkFoam"></nav>
+
+    <!-- POP-UP DE INICIO DE SESION -->
+    <div id="auth_modal" class="fixed hidden inset-0 z-[60] bg-DeepSlate/80 backdrop-blur-md flex justify-center items-end md:items-center">
+        <!-- En móvil, el modal sale desde abajo -->
+        <div class="bg-white text-DeepSlate p-8 rounded-t-4xl md:rounded-4xl w-full max-w-md relative shadow-2xl animate-[slideUp_0.3s_ease-out]">
+            <button id="cerrar_pop" class="absolute top-6 right-6 h-10 w-10 flex items-center justify-center bg-gray-100 rounded-full text-xl font-bold hover:bg-gray-200 active:scale-90 transition-all">&times;</button>
+            <h2 id="titulo_pop" class="text-2xl font-extrabold mb-6 mt-2">Iniciar Sesión</h2>
+            <form class="flex flex-col gap-5">
+                <div id="nombre_group" class="flex flex-col gap-2 hidden">
+                    <label for="nombre_reg" class="font-bold text-sm ml-1 text-gray-600">Nombre o Apodo</label>
+                    <input type="text" id="nombre_reg" placeholder="Ej. Juan Pérez" class="min-h-[48px] bg-gray-50 border border-gray-200 rounded-2xl px-4 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="email" class="font-bold text-sm ml-1 text-gray-600">Correo Electrónico</label>
+                    <input type="email" id="email" placeholder="tu@email.com" class="min-h-[48px] bg-gray-50 border border-gray-200 rounded-2xl px-4 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="password" class="font-bold text-sm ml-1 text-gray-600">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" class="min-h-[48px] bg-gray-50 border border-gray-200 rounded-2xl px-4 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                </div>
+                <div id="rep_pass" class="flex flex-col gap-2 hidden">
+                    <label for="password_rep" class="font-bold text-sm ml-1 text-gray-600">Repetir Contraseña</label>
+                    <input type="password" id="password_rep" placeholder="••••••••" class="min-h-[48px] bg-gray-50 border border-gray-200 rounded-2xl px-4 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all">
+                </div>
+                <button type="button" id="button_enviar" class="mt-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-lg min-h-[48px] rounded-2xl shadow-md hover:opacity-90 active:scale-95 transition-all">ENTRAR</button>
+                <div id="mock_credentials" class="mt-4 p-4 rounded-2xl bg-gray-50 border border-gray-200 text-xs text-gray-500 text-center">
+                    <p class="font-bold uppercase tracking-wider mb-2 text-gray-700">Credenciales de prueba</p>
+                    <p class="mb-1">Email: <span class="font-mono font-bold text-DeepSlate">cristian.nettle@ucn.cl</span></p>
+                    <p>Contraseña: <span class="font-mono font-bold text-DeepSlate">nettle123</span></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+
+    <script src="../assets/js/navbar.js"></script>
+    <script src="../assets/js/app.js"></script>
+</body>
+</html>

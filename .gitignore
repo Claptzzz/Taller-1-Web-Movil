@@ -1,0 +1,17 @@
+node_modules/
+backend/node_modules/
+dist/
+build/
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+*.apk
+*.aab
+.env
+.claude/
+.agents/
+.impeccable/
+skills-lock.json
+PRODUCT.md
+DESIGN.md

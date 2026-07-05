@@ -136,12 +136,14 @@ export class SuenoService {
 
     const dias = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
     const horas = [0, 0, 0, 0, 0, 0, 0];
+    const calidades = ['MEDIA', 'MEDIA', 'MEDIA', 'MEDIA', 'MEDIA', 'MEDIA', 'MEDIA'];
     for (const r of registros) {
       const idx = (r.fechaSueno.getUTCDay() + 6) % 7;
       horas[idx] = r.horasDormidas;
+      calidades[idx] = r.calidadSueno;
     }
 
-    return { dias, horas };
+    return { dias, horas, calidades };
   }
 
   async findOne(userId: string, id: number) {

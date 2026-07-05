@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="assets/css/input.css">
+    <link rel="shortcut icon" href="assets/img/icon-sleepwell.ico" type="image/x-icon">
+
+    <style type="text/tailwindcss">
+        @theme {
+        --color-OatmilkFoam: #F8F4EF;
+        --color-DeepSlate: #40434E;
+        }
+    </style>
+
+    <title>SleepWell - Sueña Bien</title>
+</head>
+<body class="bg-DeepSlate text-OatmilkFoam h-screen w-full flex flex-col justify-between overflow-hidden relative selection:bg-sky-200">
+    
+    <!-- FONDO Y DECORACIÓN NATIVA -->
+    <div class="absolute inset-0 bg-[url(assets/img/fondo_landing.webp)] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-DeepSlate via-DeepSlate/80 to-transparent"></div>
+
+    <!-- CONTENIDO SUPERIOR (LOGO) -->
+    <main class="relative z-10 flex flex-col items-center justify-center pt-24 px-6 flex-grow">
+        <div class="bg-OatmilkFoam text-DeepSlate h-24 w-24 rounded-full flex items-center justify-center shadow-2xl mb-6 animate-[bounce_2s_infinite]">
+            <svg class="h-12 w-12"><use xlink:href="assets/img/sprites.svg#logo-icon" /></svg>
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tighter mb-2">SLEEPWELL</h1>
+        <p class="text-sky-200 font-medium text-lg text-center max-w-[280px]">Optimiza tus ciclos de sueño y mejora tu calidad de vida.</p>
+    </main>
+
+    <!-- CONTENIDO INFERIOR (BOTÓN) -->
+    <footer class="relative z-10 w-full px-6 pb-12 flex flex-col items-center gap-4">
+        <a href="pages/perfil.html" class="w-full max-w-sm bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-lg min-h-[56px] flex items-center justify-center rounded-2xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
+            COMENZAR
+        </a>
+        <p class="text-xs font-medium opacity-60">Tu bienestar al alcance de tu mano</p>
+    </footer>
+
+    <!-- Script de redirección automática si ya está logueado -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem('sesionIniciada') === 'true' && localStorage.getItem('token')) {
+                // Redirigir directamente al perfil (dashboard) de forma invisible
+                window.location.replace("pages/perfil.html");
+            }
+        });
+    </script>
+</body>
+</html>

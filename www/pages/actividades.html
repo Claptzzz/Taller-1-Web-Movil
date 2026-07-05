@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="shortcut icon" href="../assets/img/icon-sleepwell.ico" type="image/x-icon">
+    
+    <style type="text/tailwindcss">
+        @theme {
+            --color-OatmilkFoam: #F8F4EF;
+            --color-DeepSlate: #40434E;
+            --color-DeepSlateDark: #353741;
+            --color-DeepSlateLight: #5E6373;
+        }
+    </style>
+</head>
+<body class="bg-OatmilkFoam text-DeepSlate flex flex-col min-h-screen overflow-x-hidden pb-24 font-sans selection:bg-sky-200">
+
+    <!-- TOP APP BAR -->
+    <header class="sticky top-0 z-40 w-full bg-OatmilkFoam/90 backdrop-blur-md px-6 py-4 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-2">
+            <svg class="h-6 w-6 text-DeepSlate"><use xlink:href="../assets/img/sprites.svg#spark-icon" /></svg>
+            <h1 class="font-bold text-xl tracking-tighter uppercase">ACTIVIDADES</h1>
+        </div>
+        <!-- Enlaces ocultos requeridos por navbar.js -->
+        <a id="logo_link" href="../index.html" class="hidden"></a>
+        <a id="perfil_link" href="perfil.html" class="hidden"></a>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL: CALENDARIO Y ORGANIZADOR -->
+    <main class="w-full max-w-md mx-auto mt-6 px-4 flex-grow flex flex-col gap-6">
+        
+        <!-- SECCIÓN CALENDARIO -->
+        <section class="bg-white p-4 sm:p-6 rounded-3xl shadow-sm border border-gray-100 w-full overflow-hidden">
+            <header class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-extrabold uppercase text-DeepSlate">Abril 2026</h2>
+                <nav class="flex gap-2">
+                    <button class="bg-gray-100 hover:bg-gray-200 text-DeepSlate h-10 w-10 flex items-center justify-center rounded-full transition-all active:scale-90">&larr;</button>
+                    <button class="bg-gray-100 hover:bg-gray-200 text-DeepSlate h-10 w-10 flex items-center justify-center rounded-full transition-all active:scale-90">&rarr;</button>
+                </nav>
+            </header>
+
+            <div class="w-full overflow-x-auto pb-2">
+                <table class="w-full text-DeepSlate border-separate border-spacing-y-2 min-w-[280px]">
+                <thead>
+                    <tr class="text-xs font-bold uppercase text-gray-400">
+                        <th class="pb-2">Lu</th>
+                        <th class="pb-2">Ma</th>
+                        <th class="pb-2">Mi</th>
+                        <th class="pb-2">Ju</th>
+                        <th class="pb-2">Vi</th>
+                        <th class="pb-2">Sá</th>
+                        <th class="pb-2">Do</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center font-bold text-sm">
+                    <!-- Ejemplo de días del calendario -->
+                    <tr>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center text-gray-300">30</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center text-gray-300">31</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">1</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">2</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full border-2 border-sky-400 text-sky-500 hover:bg-sky-100 transition-colors cursor-pointer">3</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">4</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">5</div></td>
+                    </tr>
+                    <tr>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">6</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">7</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">8</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">9</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full bg-DeepSlate text-white shadow-md cursor-pointer">10</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full hover:bg-sky-100 transition-colors cursor-pointer">11</div></td>
+                        <td class="p-1"><div class="h-9 w-9 mx-auto flex items-center justify-center rounded-full text-red-500 hover:bg-sky-100 transition-colors cursor-pointer">12</div></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+        <!-- SECCIÓN AGREGAR AL DÍA -->
+        <article class="bg-DeepSlate p-6 rounded-3xl shadow-md text-white">
+            <h3 class="text-sm font-bold mb-4 uppercase tracking-wider text-sky-200">Hoy: Viernes 10</h3>
+            <form class="flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium ml-1">Nueva Actividad</label>
+                    <input type="text" placeholder="Ej: Running 5km" class="w-full h-12 bg-white/10 border border-white/20 text-white rounded-2xl px-4 outline-none placeholder:text-white/50 focus:border-sky-400 focus:bg-white/20 transition-all">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium ml-1">Hora</label>
+                    <input type="time" class="w-full h-12 bg-white/10 border border-white/20 text-white rounded-2xl px-4 outline-none focus:border-sky-400 focus:bg-white/20 transition-all [color-scheme:dark]">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <button type="button" id="btn_ubicacion"
+                        class="h-12 flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white/90 font-medium text-sm rounded-2xl px-4 hover:bg-white/10 hover:border-white/30 active:scale-[0.97] disabled:opacity-60 disabled:pointer-events-none transition-[transform,background-color,border-color,opacity] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]">
+                        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/>
+                            <circle cx="12" cy="11" r="2.5"/>
+                        </svg>
+                        <span id="btn_ubicacion_texto">Agregar mi ubicación</span>
+                    </button>
+                    <span id="chip_ubicacion" hidden
+                        class="self-start inline-flex items-center gap-2 bg-white/10 border border-white/15 text-sky-200 text-xs font-medium px-3 py-1.5 rounded-full opacity-0 scale-95 motion-reduce:scale-100 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]">
+                        <span id="chip_ubicacion_texto"></span>
+                        <button type="button" id="btn_quitar_ubicacion" aria-label="Quitar ubicación"
+                            class="text-white/60 hover:text-white leading-none active:scale-[0.97] transition-colors duration-150">&times;</button>
+                    </span>
+                    <p id="error_ubicacion" hidden class="text-xs text-red-200 ml-1"></p>
+                </div>
+                <button type="button" id="btn_agregar" class="mt-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold min-h-[48px] rounded-2xl shadow-md hover:opacity-90 active:scale-95 transition-all uppercase tracking-wider text-sm">
+                    AGREGAR AL DÍA
+                </button>
+                <p id="confirmacion_recordatorio" hidden aria-live="polite"
+                    class="text-xs text-sky-200/90 text-center opacity-0 scale-95 motion-reduce:scale-100 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]"></p>
+            </form>
+        </article>
+
+        <!-- LISTADO DEL DÍA -->
+        <article class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-6">
+            <h4 class="font-extrabold text-DeepSlate uppercase mb-4 tracking-tight">Planificación del día</h4>
+            <ul class="flex flex-col gap-3">
+                <li class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border-l-4 border-DeepSlate shadow-sm">
+                    <span class="font-bold text-DeepSlate text-sm">Yoga matutino</span>
+                    <span class="text-xs font-black text-gray-400 uppercase bg-white px-2 py-1 rounded-lg">07:00 AM</span>
+                </li>
+                <li class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border-l-4 border-sky-400 shadow-sm">
+                    <span class="font-bold text-DeepSlate text-sm">Snack saludable</span>
+                    <span class="text-xs font-black text-gray-400 uppercase bg-white px-2 py-1 rounded-lg">11:30 AM</span>
+                </li>
+            </ul>
+        </article>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav id="main_nav" class="fixed bottom-0 w-full bg-DeepSlate rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex justify-around items-center px-4 py-2 z-50 border-t border-white/5 pb-[env(safe-area-inset-bottom,16px)] text-OatmilkFoam"></nav>
+
+    <script src="../assets/js/navbar.js"></script>
+    <script src="../assets/js/notificaciones.js"></script>
+    <script src="../assets/js/actividades.js"></script>
+</body>
+</html>

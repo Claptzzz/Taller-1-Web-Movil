@@ -22,6 +22,22 @@ const ACTIVIDAD_BODY = {
       descripcion: { type: 'string', example: 'Correr 5km' },
       hora: { type: 'string', example: '07:30' },
       fecha: { type: 'string', format: 'date', example: '2026-04-27' },
+      lat: {
+        type: 'number',
+        nullable: true,
+        minimum: -90,
+        maximum: 90,
+        example: -33.4489,
+        description: 'Latitud GPS opcional; si se envía, lng también es requerida',
+      },
+      lng: {
+        type: 'number',
+        nullable: true,
+        minimum: -180,
+        maximum: 180,
+        example: -70.6693,
+        description: 'Longitud GPS opcional; si se envía, lat también es requerida',
+      },
     },
   },
 };
