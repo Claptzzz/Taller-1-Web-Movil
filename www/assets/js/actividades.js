@@ -109,6 +109,27 @@ btnQuitarUbicacion.addEventListener('click', () => {
     setEstadoUbicacion('idle');
 });
 
+// --- Confirmación de recordatorio programado ---
+const confirmacionRecordatorio = document.getElementById('confirmacion_recordatorio');
+let timerConfirmacion = null;
+
+function mostrarConfirmacionRecordatorio(hora) {
+    clearTimeout(timerConfirmacion);
+    confirmacionRecordatorio.textContent = `Recordatorio programado para las ${hora}`;
+    confirmacionRecordatorio.hidden = false;
+    // Doble rAF: asegura que el estado inicial (opacity-0 scale-95) se pinte antes de transicionar
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        confirmacionRecordatorio.classList.remove('opacity-0', 'scale-95');
+    }));
+    // Se desvanece solo: fade-out a los 4s y recién entonces sale del flujo
+    timerConfirmacion = setTimeout(() => {
+        confirmacionRecordatorio.classList.add('opacity-0', 'scale-95');
+        timerConfirmacion = setTimeout(() => {
+            confirmacionRecordatorio.hidden = true;
+        }, 200);
+    }, 4000);
+}
+
 function generarCalendario() {
     const renderDate = new Date(currentYear, currentMonth, 1);
     calendarioHeader.textContent = renderDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase();
@@ -278,6 +299,21 @@ btnAgregar.addEventListener('click', async () => {
                 ubicacionCapturada = null;
                 setEstadoUbicacion('idle');
                 actualizarLista();
+
+                // Recordatorio local: si no hay permiso o la hora ya pasó,
+                // simplemente no hay aviso (la actividad se creó igual)
+                const hayPermiso = await pedirPermisoNotificaciones();
+                if (hayPermiso) {
+                    const programado = await programarRecordatorioActividad({
+                        id: nuevaActividad.id,
+                        descripcion: nuevaActividad.nombre,
+                        fecha: actividadData.fecha,
+                        hora: nuevaActividad.hora
+                    });
+                    if (programado) {
+                        mostrarConfirmacionRecordatorio(nuevaActividad.hora);
+                    }
+                }
             } else {
                 alert("Error al guardar la actividad en el servidor.");
             }
